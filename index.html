@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<script>document.documentElement.className+=" js";</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,8 +127,9 @@ footer .f-logo{display:flex;align-items:center;justify-content:center;gap:10px;f
 footer b{color:var(--cyan)}
 footer p{line-height:1.8}
 
-.reveal{opacity:0;transform:translateY(30px);transition:.8s ease}
-.reveal.visible{opacity:1;transform:none}
+/* Por defecto todo visible; la animación solo se activa si JS funciona */
+.js .reveal{opacity:0;transform:translateY(30px);transition:.8s ease}
+.js .reveal.visible{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -179,7 +181,15 @@ footer p{line-height:1.8}
       <span class="step-num" id="stepNum">Paso 1 de 3</span>
       <div class="bar"><i id="barFill"></i></div>
     </div>
-    <div id="wizardBody"></div>
+    <div id="wizardBody">
+      <div class="q-title"><div class="icon">🔍</div>¿Cuál es el problema principal que presentas?</div>
+      <div class="opts">
+        <button class="opt" type="button"><div class="oicon">📶</div>No veo la red Wi-Fi</button>
+        <button class="opt" type="button"><div class="oicon">🔒</div>La red aparece pero no conecta</button>
+        <button class="opt" type="button"><div class="oicon">🐌</div>Conecta pero no navega (lento o sin internet)</button>
+        <button class="opt" type="button"><div class="oicon">🔌</div>Cable de red / equipo de escritorio</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -316,13 +326,4 @@ const tree = {
   wifi_result0: { result: "ok", title: "✅ ¡Listo! Wi-Fi activado",
     body: "<p>Activaste el Wi-Fi del equipo. La red debería aparecer en la lista dentro de unos segundos.</p><ol><li>Busca la red de la institución en la lista de disponibles.</li><li>Selecciónala e ingresa la contraseña si te la solicita.</li><li>Si sigue sin aparecer, vuelve a iniciar el diagnóstico.</li></ol>" },
   wifi_result1: { result: "warn", title: "⚠️ Señal fuera de alcance o punto de acceso caído",
-    body: "<p>Si el Wi-Fi está activado y la red no aparece, la causa más probable es:</p><ol><li>Estás muy lejos del punto de acceso (router). Acércate a la zona central del salón o al pasillo.</li><li>El router de tu zona está apagado o fallando. Observa si tiene las luces encendidas.</li><li>La red está saturada por demasiados equipos conectados.</li></ol><p><b>Si el problema persiste, reporta la falla</b> indicando tu salón para que el equipo técnico revise el punto de acceso.</p>" },
-
-  no_conecta: {
-    step: 2, total: 3,
-    q: "¿Qué mensaje o comportamiento observas al intentar conectar?",
-    icon: "🔒",
-    options: [
-      { label: "Pide contraseña y la rechaza", next: "pass_result", icon: "🔑" },
-      { label: "Dice \"No se puede conectar a esta red\"", next: "netfail_result", icon: "❌" },
-      { label: "Se queda en \"Obteniendo dirección IP\"", next: "ip_
+    body: "<p>Si el Wi-Fi está activado y la red no aparece, la causa más probable es:</p><ol><li>Estás muy lejos del punto de acceso (router). Ac
