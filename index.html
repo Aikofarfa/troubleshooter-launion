@@ -127,9 +127,13 @@ footer .f-logo{display:flex;align-items:center;justify-content:center;gap:10px;f
 footer b{color:var(--cyan)}
 footer p{line-height:1.8}
 
-/* Por defecto todo visible; la animación solo se activa si JS funciona */
-.js .reveal{opacity:0;transform:translateY(30px);transition:.8s ease}
-.js .reveal.visible{opacity:1;transform:none}
+/* Animación de entrada 100% CSS: las tarjetas SIEMPRE se ven */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.reveal{animation:fadeUp .7s ease both}
+.cards .reveal:nth-child(2){animation-delay:.12s}
+.cards .reveal:nth-child(3){animation-delay:.24s}
+.cards .reveal:nth-child(4){animation-delay:.36s}
+.cards .reveal:nth-child(5){animation-delay:.48s}
 </style>
 </head>
 <body>
@@ -325,5 +329,4 @@ const tree = {
   },
   wifi_result0: { result: "ok", title: "✅ ¡Listo! Wi-Fi activado",
     body: "<p>Activaste el Wi-Fi del equipo. La red debería aparecer en la lista dentro de unos segundos.</p><ol><li>Busca la red de la institución en la lista de disponibles.</li><li>Selecciónala e ingresa la contraseña si te la solicita.</li><li>Si sigue sin aparecer, vuelve a iniciar el diagnóstico.</li></ol>" },
-  wifi_result1: { result: "warn", title: "⚠️ Señal fuera de alcance o punto de acceso caído",
-    body: "<p>Si el Wi-Fi está activado y la red no aparece, la causa más probable es:</p><ol><li>Estás muy lejos del punto de acceso (router). Ac
+  wifi_result1: { result: "warn", ti
