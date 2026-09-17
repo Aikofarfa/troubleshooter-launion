@@ -1,332 +1,439 @@
 <!DOCTYPE html>
 <html lang="es">
-<script>document.documentElement.className+=" js";</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TROUBLESHOOTER · Soporte Técnico I.E. La Unión</title>
+<meta name="description" content="Diagnóstico guiado y reportes de soporte técnico para I.E. La Unión. Los tickets llegan a sebascastroj70@gmail.com.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --cyan:#00c2ff; --cyan-dark:#0090c4; --navy:#0b1220; --navy2:#111a2e;
-  --gray:#2b3446; --light:#eef4fb; --muted:#8fa3bd; --white:#ffffff;
-  --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+  --light:#eef4fb; --muted:#8fa3bd; --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Poppins',sans-serif;background:var(--navy);color:var(--light);overflow-x:hidden}
+body{font-family:Poppins,system-ui,sans-serif;background:var(--navy);color:var(--light);overflow-x:hidden}
 ::selection{background:var(--cyan);color:var(--navy)}
-
-/* ---------- NAV ---------- */
-nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;
-  padding:16px 6vw;background:rgba(11,18,32,.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,194,255,.15)}
-.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.15rem;letter-spacing:.5px}
+button,[role=button]{cursor:pointer}
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 6vw;background:rgba(11,18,32,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,194,255,.15)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.05rem;color:inherit;text-decoration:none}
 .logo .mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),#0077ff);
-  display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(0,194,255,.45)}
-.logo span b{color:var(--cyan)}
-.nav-links{display:flex;gap:30px;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:.25s}
+  display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(0,194,255,.45);flex-shrink:0}
+.logo b{color:var(--cyan)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500}
 .nav-links a:hover{color:var(--cyan)}
-.btn{display:inline-block;padding:12px 26px;border-radius:50px;font-weight:600;font-size:.9rem;text-decoration:none;
-  transition:.3s;cursor:pointer;border:none;font-family:inherit}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:50px;font-weight:600;font-size:.9rem;text-decoration:none;transition:.25s;border:none;font-family:inherit;min-height:44px}
 .btn-primary{background:linear-gradient(135deg,var(--cyan),#0077ff);color:#fff;box-shadow:0 8px 24px rgba(0,194,255,.35)}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,194,255,.55)}
+.btn-primary:hover{transform:translateY(-2px)}
 .btn-ghost{background:transparent;color:var(--cyan);border:1.5px solid rgba(0,194,255,.5)}
-.btn-ghost:hover{background:rgba(0,194,255,.1)}
-@media(max-width:820px){.nav-links{display:none}}
-
-/* ---------- HERO ---------- */
+.menu-btn{display:none;background:transparent;border:1.5px solid rgba(0,194,255,.4);color:var(--cyan);width:44px;height:44px;border-radius:12px;font-size:1.2rem}
+@media(max-width:820px){
+  .nav-links,.nav-cta{display:none}
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(11,18,32,.96);padding:16px 6vw 24px;border-bottom:1px solid rgba(0,194,255,.15);gap:8px}
+  .nav-links.open a{display:flex;min-height:44px;align-items:center}
+}
 header{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 6vw 60px}
-.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
-.hero-bg::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,194,255,.18),transparent 65%);top:-150px;left:-150px;animation:pulse 6s ease-in-out infinite}
-.hero-bg::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,119,255,.14),transparent 65%);bottom:-120px;right:-100px;animation:pulse 8s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(0,194,255,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(0,194,255,.05) 1px,transparent 1px);background-size:48px 48px;z-index:0}
+.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.hero-bg::before,.hero-bg::after{content:'';position:absolute;border-radius:50%}
+.hero-bg::before{width:600px;height:600px;background:radial-gradient(circle,rgba(0,194,255,.18),transparent 65%);top:-150px;left:-150px}
+.hero-bg::after{width:500px;height:500px;background:radial-gradient(circle,rgba(0,119,255,.14),transparent 65%);bottom:-120px;right:-100px}
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(0,194,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,194,255,.05) 1px,transparent 1px);background-size:48px 48px;z-index:0;pointer-events:none}
 .hero-content{position:relative;z-index:2;max-width:900px}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;background:rgba(0,194,255,.1);
-  border:1px solid rgba(0,194,255,.3);color:var(--cyan);font-size:.8rem;font-weight:600;letter-spacing:1.5px;margin-bottom:26px;text-transform:uppercase}
-.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:blink 1.5s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.12;margin-bottom:22px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;background:rgba(0,194,255,.1);border:1px solid rgba(0,194,255,.3);color:var(--cyan);font-size:.78rem;font-weight:600;letter-spacing:1.4px;margin-bottom:26px;text-transform:uppercase}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;line-height:1.12;margin-bottom:22px}
 h1 .grad{background:linear-gradient(90deg,var(--cyan),#7ee0ff,#0077ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-content p{color:var(--muted);font-size:1.1rem;max-width:640px;margin:0 auto 36px;line-height:1.7}
-.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.stats{display:flex;gap:48px;justify-content:center;margin-top:60px;flex-wrap:wrap}
-.stat{text-align:center}
+.hero-content p{color:var(--muted);font-size:1.05rem;max-width:640px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.stats{display:flex;gap:40px;justify-content:center;margin-top:56px;flex-wrap:wrap}
 .stat .num{font-size:2rem;font-weight:800;color:var(--cyan);font-family:'JetBrains Mono',monospace}
-.stat .lbl{font-size:.8rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-
-/* ---------- SECTIONS ---------- */
+.stat .lbl{font-size:.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 section{padding:90px 6vw;max-width:1200px;margin:0 auto}
-.sec-tag{color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
-h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;margin-bottom:14px}
-.sec-desc{color:var(--muted);max-width:620px;line-height:1.7;margin-bottom:44px}
-
-/* ---------- DIAGNOSTIC WIZARD ---------- */
-.wizard{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(0,194,255,.2);border-radius:24px;
-  padding:44px;box-shadow:0 24px 60px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.sec-tag{color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700;margin-bottom:14px}
+.sec-desc{color:var(--muted);max-width:640px;line-height:1.7;margin-bottom:40px}
+.wizard{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(0,194,255,.2);border-radius:24px;padding:40px;box-shadow:0 24px 60px rgba(0,0,0,.45);position:relative;overflow:hidden}
 .wizard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),#0077ff)}
-.progress{display:flex;align-items:center;gap:8px;margin-bottom:32px}
+.progress{display:flex;align-items:center;gap:8px;margin-bottom:28px}
 .progress .bar{flex:1;height:6px;border-radius:10px;background:rgba(255,255,255,.08);overflow:hidden}
-.progress .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),#0077ff);width:0%;transition:width .5s ease;border-radius:10px}
-.progress .step-num{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:.85rem;white-space:nowrap}
-.q-title{font-size:1.35rem;font-weight:600;margin-bottom:28px;display:flex;align-items:center;gap:14px}
+.progress .bar i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--cyan),#0077ff);transition:width .4s ease}
+.progress .step-num{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:.82rem;white-space:nowrap}
+.q-title{font-size:1.25rem;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.q-sub{color:var(--muted);margin:0 0 22px 58px;font-size:.92rem;line-height:1.5}
 .q-title .icon{width:44px;height:44px;border-radius:12px;background:rgba(0,194,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.opt{background:rgba(255,255,255,.04);border:1.5px solid rgba(143,163,189,.25);border-radius:16px;padding:20px 22px;cursor:pointer;
-  transition:.28s;display:flex;align-items:center;gap:14px;font-size:.95rem;font-weight:500;text-align:left;color:var(--light);font-family:inherit;width:100%}
-.opt:hover{border-color:var(--cyan);background:rgba(0,194,255,.08);transform:translateY(-3px)}
-.opt .oicon{width:40px;height:40px;border-radius:10px;background:rgba(0,194,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
-.result{border-radius:16px;padding:28px;margin-bottom:28px;border:1.5px solid}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.opt{background:rgba(255,255,255,.04);border:1.5px solid rgba(143,163,189,.25);border-radius:16px;padding:18px 20px;display:flex;align-items:flex-start;gap:14px;font-size:.95rem;font-weight:500;text-align:left;color:var(--light);font-family:inherit;width:100%}
+.opt:hover{border-color:var(--cyan);background:rgba(0,194,255,.08);transform:translateY(-2px)}
+.opt .oicon{width:40px;height:40px;border-radius:10px;background:rgba(0,194,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt small{display:block;color:var(--muted);font-weight:400;margin-top:4px;font-size:.8rem}
+.result{border-radius:16px;padding:26px;margin-bottom:18px;border:1.5px solid}
 .result.ok{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.08)}
 .result.warn{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.08)}
-.result h3{display:flex;align-items:center;gap:10px;font-size:1.15rem;margin-bottom:12px}
+.result h3{font-size:1.12rem;margin-bottom:10px}
 .result.ok h3{color:var(--ok)}.result.warn h3{color:var(--warn)}
-.result ol{margin-left:20px;color:#c8d6e8;line-height:1.9;font-size:.95rem}
-.result p{color:#c8d6e8;line-height:1.7;font-size:.95rem;margin-bottom:10px}
-.wiz-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-.back-link{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.85rem;cursor:pointer;text-decoration:underline}
-.back-link:hover{color:var(--cyan)}
-@media(max-width:600px){.wizard{padding:26px}}
-
-/* ---------- CARDS ---------- */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.card{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(143,163,189,.15);border-radius:20px;padding:30px;transition:.3s}
-.card:hover{transform:translateY(-6px);border-color:rgba(0,194,255,.45);box-shadow:0 18px 40px rgba(0,0,0,.4)}
-.card .cicon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(0,194,255,.2),rgba(0,119,255,.15));
-  display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.card h3{font-size:1.1rem;margin-bottom:10px}
+.result ol{margin-left:20px;color:#c8d6e8;line-height:1.85;font-size:.95rem}
+.result p{color:#c8d6e8;line-height:1.7;margin-bottom:10px}
+.wiz-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.back-link{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.85rem;text-decoration:underline}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(143,163,189,.15);border-radius:20px;padding:26px}
+.card:hover{border-color:rgba(0,194,255,.45);transform:translateY(-4px)}
+.card .cicon{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,rgba(0,194,255,.2),rgba(0,119,255,.15));display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.3rem}
+.card h3{font-size:1.05rem;margin-bottom:8px}
 .card p{color:var(--muted);font-size:.9rem;line-height:1.65}
-.tag{display:inline-block;margin-top:14px;padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:600;letter-spacing:.5px}
+.tag{display:inline-block;margin-top:12px;padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:600}
 .tag.easy{background:rgba(34,197,94,.15);color:var(--ok)}
 .tag.med{background:rgba(245,158,11,.15);color:var(--warn)}
 .tag.hard{background:rgba(239,68,68,.15);color:var(--danger)}
-
-/* ---------- REPORT FORM ---------- */
-.form-wrap{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(0,194,255,.2);border-radius:24px;
-  padding:44px;box-shadow:0 24px 60px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.form-wrap{background:linear-gradient(145deg,var(--navy2),#0d1526);border:1px solid rgba(0,194,255,.2);border-radius:24px;padding:40px;box-shadow:0 24px 60px rgba(0,0,0,.45);position:relative;overflow:hidden}
 .form-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0077ff,var(--cyan))}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .form-grid .full{grid-column:1/-1}
-label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:8px;letter-spacing:.3px}
-input,select,textarea{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(143,163,189,.3);border-radius:12px;
-  padding:14px 16px;color:var(--light);font-family:inherit;font-size:.92rem;transition:.25s;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--cyan);background:rgba(0,194,255,.06);box-shadow:0 0 0 4px rgba(0,194,255,.12)}
-textarea{resize:vertical;min-height:120px}
+label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+input,select,textarea{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(143,163,189,.3);border-radius:12px;padding:14px 16px;color:var(--light);font-family:inherit;font-size:.92rem;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0,194,255,.12)}
+textarea{min-height:120px;resize:vertical}
 select option{background:var(--navy2)}
-.form-note{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.8rem;margin-top:18px}
-@media(max-width:700px){.form-grid{grid-template-columns:1fr}.form-wrap{padding:28px}}
-
-/* ---------- FOOTER ---------- */
+.urgency{display:flex;flex-wrap:wrap;gap:8px}
+.urg{min-height:42px;border-radius:999px;border:1.5px solid rgba(143,163,189,.3);background:transparent;color:var(--muted);padding:0 16px;font-family:inherit;font-weight:600;font-size:.85rem;text-transform:capitalize}
+.urg.on.baja{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.15);color:var(--ok)}
+.urg.on.media{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.15);color:var(--warn)}
+.urg.on.alta{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.15);color:var(--danger)}
+.form-note{display:flex;align-items:flex-start;gap:8px;color:var(--muted);font-size:.8rem;margin-top:16px;line-height:1.5}
+.notice{display:none;border-radius:16px;padding:14px 16px;margin-bottom:18px;font-size:.92rem;line-height:1.55}
+.notice.show{display:block}
+.notice.ok{border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.1);color:var(--ok)}
+.notice.warn{border:1px solid rgba(245,158,11,.4);background:rgba(245,158,11,.1);color:var(--warn)}
+.notice.err{border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.1);color:#ff8b8b}
+.hp{position:absolute;left:-9999px;height:0;width:0;overflow:hidden}
 footer{border-top:1px solid rgba(0,194,255,.15);padding:44px 6vw;text-align:center;color:var(--muted);font-size:.85rem}
-footer .f-logo{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;color:var(--light);margin-bottom:14px}
 footer b{color:var(--cyan)}
 footer p{line-height:1.8}
-
-/* Animación de entrada 100% CSS: las tarjetas SIEMPRE se ven */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-.reveal{animation:fadeUp .7s ease both}
-.cards .reveal:nth-child(2){animation-delay:.12s}
-.cards .reveal:nth-child(3){animation-delay:.24s}
-.cards .reveal:nth-child(4){animation-delay:.36s}
-.cards .reveal:nth-child(5){animation-delay:.48s}
+@media(max-width:700px){.form-grid{grid-columns:1fr;grid-template-columns:1fr}.wizard,.form-wrap{padding:24px}.q-sub{margin-left:0}}
 </style>
 </head>
 <body>
-
 <nav>
-  <div class="logo">
+  <a class="logo" href="#inicio">
     <div class="mark">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M12 20h.01"/>
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-3.76 3.76a2.12 2.12 0 0 1-3-3l3.76-3.76"/>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
     </div>
     <span>TROUBLE<b>SHOOTER</b></span>
-  </div>
-  <ul class="nav-links">
+  </a>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#inicio">Inicio</a></li>
     <li><a href="#diagnostico">Diagnóstico</a></li>
-    <li><a href="#fallas">Fallas comunes</a></li>
+    <li><a href="#guias">Guías</a></li>
     <li><a href="#reportar">Reportar</a></li>
   </ul>
-  <a href="#reportar" class="btn btn-primary">Reportar falla</a>
+  <a href="#reportar" class="btn btn-primary nav-cta">Reportar falla</a>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Menú">☰</button>
 </nav>
 
 <header id="inicio">
   <div class="hero-bg"></div>
   <div class="grid-lines"></div>
   <div class="hero-content">
-    <div class="badge"><span class="dot"></span> SOPORTE TÉCNICO EN LÍNEA · I.E. LA UNIÓN</div>
-    <h1>¿Falló el internet?<br><span class="grad">Diagnostícalo en segundos</span></h1>
-    <p>Plataforma de autodiagnóstico de conectividad para estudiantes y docentes. Sigue nuestras guías interactivas paso a paso y resuelve las fallas más comunes de la red institucional sin salir del salón.</p>
+    <div class="badge"><span class="dot"></span> Soporte en línea · I.E. La Unión</div>
+    <h1>Resuelve fallas de aula<br><span class="grad">antes de llamar a sistemas</span></h1>
+    <p>Asistente de diagnóstico para computadores, red, proyector, impresora y cuentas institucionales. Si no se soluciona, el reporte llega a <strong style="color:var(--light)">sebascastroj70@gmail.com</strong>.</p>
     <div class="hero-btns">
-      <a href="#diagnostico" class="btn btn-primary">🔍 Iniciar diagnóstico</a>
-      <a href="#reportar" class="btn btn-ghost">📋 Reportar problema</a>
+      <a href="#diagnostico" class="btn btn-primary">Iniciar diagnóstico</a>
+      <a href="#reportar" class="btn btn-ghost">Reportar problema</a>
     </div>
     <div class="stats">
-      <div class="stat"><div class="num">5+</div><div class="lbl">Fallas comunes</div></div>
+      <div class="stat"><div class="num">6</div><div class="lbl">Categorías</div></div>
+      <div class="stat"><div class="num">18</div><div class="lbl">Soluciones guiadas</div></div>
       <div class="stat"><div class="num">24/7</div><div class="lbl">Disponible</div></div>
-      <div class="stat"><div class="num">100%</div><div class="lbl">Gratuito</div></div>
     </div>
   </div>
 </header>
 
 <section id="diagnostico">
-  <p class="sec-tag">// Árbol de decisiones</p>
-  <h2>Asistente de diagnóstico interactivo</h2>
-  <p class="sec-desc">Responde las preguntas y nuestro asistente te guiará hasta la solución más probable. No necesitas conocimientos técnicos.</p>
+  <p class="sec-tag">01 — Diagnóstico</p>
+  <h2>Asistente interactivo</h2>
+  <p class="sec-desc">Responde 1 o 2 preguntas. Te damos los pasos. Si no alcanza, el reporte queda listo para sistemas.</p>
   <div class="wizard">
     <div class="progress">
-      <span class="step-num" id="stepNum">Paso 1 de 3</span>
+      <span class="step-num" id="stepNum">Paso 1</span>
       <div class="bar"><i id="barFill"></i></div>
     </div>
-    <div id="wizardBody">
-      <div class="q-title"><div class="icon">🔍</div>¿Cuál es el problema principal que presentas?</div>
-      <div class="opts">
-        <button class="opt" type="button"><div class="oicon">📶</div>No veo la red Wi-Fi</button>
-        <button class="opt" type="button"><div class="oicon">🔒</div>La red aparece pero no conecta</button>
-        <button class="opt" type="button"><div class="oicon">🐌</div>Conecta pero no navega (lento o sin internet)</button>
-        <button class="opt" type="button"><div class="oicon">🔌</div>Cable de red / equipo de escritorio</button>
-      </div>
-    </div>
+    <div id="wizardBody"></div>
   </div>
 </section>
 
-<section id="fallas">
-  <p class="sec-tag">// Base de conocimientos</p>
-  <h2>Fallas más comunes de la red</h2>
-  <p class="sec-desc">Estas son las 5 problemáticas más reportadas en la Institución Educativa La Unión. Cada una incluye su nivel de dificultad y solución rápida.</p>
-  <div class="cards">
-    <div class="card reveal">
-      <div class="cicon">📶</div>
-      <h3>Red Wi-Fi no detectada</h3>
-      <p>El equipo no muestra la red de la institución en la lista de disponibles. Revisa que el Wi-Fi esté activado y acércate al punto de acceso más cercano.</p>
-      <span class="tag easy">NIVEL BÁSICO</span>
-    </div>
-    <div class="card reveal">
-      <div class="cicon">🐌</div>
-      <h3>Conexión lenta o inestable</h3>
-      <p>Las páginas tardan en cargar o la señal se cae constantemente. Verifica la intensidad de señal y cierra descargas o pestañas innecesarias.</p>
-      <span class="tag med">NIVEL MEDIO</span>
-    </div>
-    <div class="card reveal">
-      <div class="cicon">🔌</div>
-      <h3>Cable de red desconectado</h3>
-      <p>En equipos de escritorio aparece el mensaje "cable de red desconectado". Revisa que el cable Ethernet esté bien insertado en ambos extremos.</p>
-      <span class="tag easy">NIVEL BÁSICO</span>
-    </div>
-    <div class="card reveal">
-      <div class="cicon">🚫</div>
-      <h3>Sin acceso a internet</h3>
-      <p>El equipo se conecta a la red pero no navega. Posible caída del proveedor o del router principal. Reinicia el equipo y verifica con otros dispositivos.</p>
-      <span class="tag med">NIVEL MEDIO</span>
-    </div>
-    <div class="card reveal">
-      <div class="cicon">🖥️</div>
-      <h3>IP o configuración inválida</h3>
-      <p>Conflicto de direcciones IP entre equipos de la red. Ejecuta diagnóstico de red o solicita renovación de IP al personal técnico.</p>
-      <span class="tag hard">NIVEL AVANZADO</span>
-    </div>
-  </div>
+<section id="guias">
+  <p class="sec-tag">02 — Guías rápidas</p>
+  <h2>Lo más frecuente en el aula</h2>
+  <p class="sec-desc">Procedimientos cortos para equipos, red, proyector, impresora y cuentas.</p>
+  <div class="cards" id="guideCards"></div>
 </section>
 
 <section id="reportar">
-  <p class="sec-tag">// Mesa de ayuda</p>
-  <h2>Reporta una falla técnica</h2>
-  <p class="sec-desc">¿No lograste resolverlo con el diagnóstico? Completa el formulario y el equipo de soporte técnico recibirá tu reporte de inmediato.</p>
+  <p class="sec-tag">03 — Reportar</p>
+  <h2>Ticket para sistemas</h2>
+  <p class="sec-desc">El correo llega a <strong style="color:var(--light)">sebascastroj70@gmail.com</strong>. La primera vez hay que confirmar un mensaje de FormSubmit (revisa también Spam).</p>
   <div class="form-wrap">
-    <form id="reportForm" action="https://formsubmit.co/sebascastroj70@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="🔧 Nuevo reporte técnico · Troubleshooter I.E. La Unión">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+    <div id="formNotice" class="notice"></div>
+    <form id="reportForm">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
       <div class="form-grid">
         <div>
           <label for="nombre">Nombre completo *</label>
-          <input type="text" id="nombre" name="Nombre" placeholder="Ej: Sebastián Castro" required>
+          <input id="nombre" name="nombre" required minlength="3" placeholder="Nombre y apellido" autocomplete="name">
         </div>
         <div>
-          <label for="rol">Rol en la institución *</label>
-          <select id="rol" name="Rol" required>
-            <option value="">Selecciona tu rol…</option>
+          <label for="rol">Rol *</label>
+          <select id="rol" name="rol" required>
             <option>Estudiante</option>
             <option>Docente</option>
-            <option>Personal administrativo</option>
+            <option>Administrativo</option>
             <option>Otro</option>
           </select>
         </div>
         <div>
-          <label for="ubicacion">Salón / ubicación *</label>
-          <input type="text" id="ubicacion" name="Ubicación" placeholder="Ej: Salón 305, Bloque B" required>
+          <label for="ubicacion">Aula o dependencia *</label>
+          <input id="ubicacion" name="aula" required minlength="2" placeholder="Ej. Aula 203, biblioteca">
         </div>
         <div>
-          <label for="tipo">Tipo de falla *</label>
-          <select id="tipo" name="Tipo_de_falla" required>
-            <option value="">Selecciona el tipo…</option>
-            <option>Red Wi-Fi no detectada</option>
-            <option>Conexión lenta o inestable</option>
-            <option>Cable de red desconectado</option>
-            <option>Sin acceso a internet</option>
-            <option>IP o configuración inválida</option>
-            <option>Otro (describir abajo)</option>
+          <label for="equipo">Equipo o servicio *</label>
+          <select id="equipo" name="equipo" required>
+            <option>Computador de aula</option>
+            <option>Portátil</option>
+            <option>Proyector / TV</option>
+            <option>Impresora</option>
+            <option>Red / WiFi</option>
+            <option>Audio</option>
+            <option>Cuenta / plataforma</option>
+            <option>Otro</option>
           </select>
         </div>
+        <div>
+          <label for="contacto">Correo para responderte</label>
+          <input id="contacto" name="_replyto" type="email" placeholder="opcional">
+        </div>
+        <div>
+          <label>Urgencia</label>
+          <div class="urgency" id="urgWrap">
+            <button type="button" class="urg baja" data-v="baja">baja</button>
+            <button type="button" class="urg media on" data-v="media">media</button>
+            <button type="button" class="urg alta" data-v="alta">alta</button>
+          </div>
+        </div>
         <div class="full">
-          <label for="desc">Descripción del problema *</label>
-          <textarea id="desc" name="Descripción" placeholder="Describe qué estabas haciendo cuando ocurrió la falla, qué mensajes de error ves, en qué equipo ocurre…" required></textarea>
+          <label for="desc">¿Qué ocurre? *</label>
+          <textarea id="desc" name="problema" required minlength="10" placeholder="Describe lo que ves, desde cuándo y a cuántos equipos les pasa."></textarea>
+        </div>
+        <div class="full">
+          <label for="intentado">¿Qué ya intentaste?</label>
+          <textarea id="intentado" name="intentado" placeholder="Pasos del asistente, reinicios, otro cable…"></textarea>
         </div>
       </div>
-      <div style="margin-top:26px">
-        <button type="submit" class="btn btn-primary" id="submitBtn">🚀 Enviar reporte</button>
+      <div style="margin-top:24px">
+        <button type="submit" class="btn btn-primary" id="submitBtn">Enviar reporte</button>
       </div>
-      <div class="form-note">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Tu reporte llegará directamente al equipo de soporte técnico.
-      </div>
+      <p class="form-note">Se envía a sebascastroj70@gmail.com. Si es la primera vez, FormSubmit manda un correo de activación a esa cuenta: ábrelo y pulsa Confirm form.</p>
     </form>
   </div>
 </section>
 
 <footer>
-  <div class="f-logo">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00c2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M12 20h.01"/>
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-3.76 3.76a2.12 2.12 0 0 1-3-3l3.76-3.76"/>
-    </svg>
-    TROUBLE<b>SHOOTER</b>
-  </div>
-  <p>Proyecto formativo SENATIC · Institución Educativa La Unión, Atlántico<br>
-  Equipo 4 — Diego Gómez · Sebastián Castro · Camilo Cardona · Sandra Solera · Salomé Quintero<br>
-  © 2026 Todos los derechos reservados</p>
+  <p><b>TROUBLESHOOTER</b> · I.E. La Unión, Atlántico</p>
+  <p>Proyecto formativo SENATIC · Equipo 4 — Diego Gómez · Sebastián Castro · Camilo Cardona · Sandra Solera · Salomé Quintero</p>
+  <p>Reportes: sebascastroj70@gmail.com · Atención presencial lun–vie 7:00–16:00</p>
 </footer>
 
 <script>
-/* ================= ARBOL DE DECISIONES ================= */
+const INBOX = "sebascastroj70@gmail.com";
 const tree = {
-  start: {
-    step: 1, total: 3,
-    q: "¿Cuál es el problema principal que presentas?",
-    icon: "🔍",
-    options: [
-      { label: "No veo la red Wi-Fi", next: "wifi_no_aparece", icon: "📶" },
-      { label: "La red aparece pero no conecta", next: "no_conecta", icon: "🔒" },
-      { label: "Conecta pero no navega (lento o sin internet)", next: "no_navega", icon: "🐌" },
-      { label: "Cable de red / equipo de escritorio", next: "cable", icon: "🔌" }
-    ]
-  },
-  wifi_no_aparece: {
-    step: 2, total: 3,
-    q: "Revisa primero: ¿el Wi-Fi del equipo está activado?",
-    icon: "📶",
-    options: [
-      { label: "Sí, está activado y aun así no aparece", next: "wifi_result1", icon: "✔️" },
-      { label: "No, estaba desactivado", next: "wifi_result0", icon: "✖️" }
-    ]
-  },
-  wifi_result0: { result: "ok", title: "✅ ¡Listo! Wi-Fi activado",
-    body: "<p>Activaste el Wi-Fi del equipo. La red debería aparecer en la lista dentro de unos segundos.</p><ol><li>Busca la red de la institución en la lista de disponibles.</li><li>Selecciónala e ingresa la contraseña si te la solicita.</li><li>Si sigue sin aparecer, vuelve a iniciar el diagnóstico.</li></ol>" },
-  wifi_result1: { result: "warn", ti
+  start:{title:"¿Qué está fallando?",sub:"Elige la categoría más cercana.",icon:"❓",options:[
+    {l:"Computador o portátil",h:"No enciende, lento o pantalla negra",i:"💻",n:"pc"},
+    {l:"Internet o WiFi",h:"No carga, sin red o solo un equipo",i:"📶",n:"net"},
+    {l:"Proyector o televisor",h:"Sin imagen, HDMI o input",i:"📽️",n:"proj"},
+    {l:"Impresora",h:"No imprime, atasco o desconectada",i:"🖨️",n:"print"},
+    {l:"Audio o micrófono",h:"Sin sonido, mudo o cable",i:"🔊",n:"audio"},
+    {l:"Cuenta o plataforma",h:"Correo, contraseña o bloqueo",i:"👤",n:"acc"}
+  ]},
+  pc:{title:"¿Qué ocurre con el computador?",icon:"💻",options:[
+    {l:"No enciende",h:"Sin luces ni ventilador",i:"⚡",n:"pc_pwr"},
+    {l:"Enciende pero no carga el sistema",i:"🔄",n:"r_boot"},
+    {l:"Está muy lento",i:"🐢",n:"r_slow"},
+    {l:"Pantalla negra o sin señal",i:"🖥️",n:"r_disp"}
+  ]},
+  pc_pwr:{title:"¿El cable de poder está bien conectado?",icon:"⚡",options:[
+    {l:"No estoy seguro / se ve suelto",i:"🔌",n:"r_cable"},
+    {l:"Es un portátil y la batería está en 0",i:"🔋",n:"r_charge"},
+    {l:"Sí: está conectado y hay corriente",i:"⚠️",n:"r_dead"}
+  ]},
+  net:{title:"¿A cuántos equipos les falta internet?",icon:"📶",options:[
+    {l:"Solo este computador",i:"💻",n:"r_net1"},
+    {l:"Veo la red WiFi pero no entra",i:"🔒",n:"r_wifi"},
+    {l:"Nadie del aula tiene internet",i:"⚠️",n:"r_netall"}
+  ]},
+  proj:{title:"¿Qué ves en el proyector o el televisor?",icon:"📽️",options:[
+    {l:"Sin señal / pantalla azul o negra",i:"🖥️",n:"r_input"},
+    {l:"El cable HDMI o VGA está suelto",i:"🔌",n:"r_hdmi"},
+    {l:"Imagen muy oscura o parpadea",i:"💡",n:"r_lamp"}
+  ]},
+  print:{title:"¿Qué hace la impresora?",icon:"🖨️",options:[
+    {l:"Papel atascado o no jala hoja",i:"📄",n:"r_jam"},
+    {l:"Aparece desconectada u offline",i:"📴",n:"r_off"},
+    {l:"El trabajo se queda en cola",i:"⏳",n:"r_queue"}
+  ]},
+  audio:{title:"¿Qué pasa con el audio?",icon:"🔊",options:[
+    {l:"No se oye nada",i:"🔇",n:"r_mute"},
+    {l:"Parlantes o diadema desconectados",i:"🔌",n:"r_acable"},
+    {l:"El micrófono no captura voz",i:"🎤",n:"r_mic"}
+  ]},
+  acc:{title:"¿Cuál es el problema con la cuenta?",icon:"👤",options:[
+    {l:"Olvidé o no acepta la contraseña",i:"🔑",n:"r_pass"},
+    {l:"La cuenta está bloqueada",i:"🔒",n:"r_lock"},
+    {l:"No entra a Classroom, correo u otra plataforma",i:"📬",n:"r_plat"}
+  ]},
+  r_cable:{s:"ok",t:"Revisa la alimentación",p:"La mayoría de los “no enciende” se resuelven reconectando el cable y el interruptor de la fuente.",steps:["Confirma que el tomacorriente tenga corriente.","Conecta el cable a fondo al CPU o al portátil.","En escritorio, el switch de la fuente (atrás) debe estar en I.","Mantén el botón de encendido 3 segundos.","Si no hay luces, reporta el equipo."],cat:"Computador"},
+  r_charge:{s:"ok",t:"Carga el portátil antes de usarlo",p:"Con batería en 0 muchos portátiles no encienden aunque el cargador esté puesto.",steps:["Conecta el cargador original. Debe verse un LED.","Déjalo 15–20 minutos sin usarlo.","Si el LED no prende, prueba otro tomacorriente.","Si aún no responde, reporta con el código de inventario."],cat:"Computador"},
+  r_dead:{s:"warn",t:"El equipo no responde: hay que revisarlo",p:"Si hay corriente y el cable está bien, el fallo suele ser interno.",steps:["No abras el CPU ni cambies piezas.","Anota ruidos, olor a quemado o luces intermitentes.","Identifica aula, puesto y código.","Envía un reporte a soporte."],cat:"Computador"},
+  r_boot:{s:"warn",t:"El sistema no termina de cargar",p:"Puede ser un apagado incorrecto, actualización trabada o disco con error.",steps:["Espera 2 minutos: a veces está reparando el disco.","Si ves un porcentaje, no lo apagues.","Si se queda más de 10 minutos, apaga 8 segundos y vuelve a encender.","Si el ciclo se repite, reporta."],cat:"Computador"},
+  r_slow:{s:"ok",t:"Acelera el equipo con una limpieza simple",p:"Lo más común es tener muchas pestañas o el disco lleno.",steps:["Cierra pestañas y programas que no uses.","Reinicia desde Inicio → Reiniciar.","Retira USB desconocidos.","Si sigue igual, reporta."],cat:"Computador"},
+  r_disp:{s:"ok",t:"Recupera la imagen de la pantalla",p:"El equipo puede estar enviando video al proyector, o el cable está suelto.",steps:["Mira si el CPU tiene luces.","Reconecta HDMI/VGA en monitor y CPU.","En portátil: Fn + tecla de pantalla.","Prueba el botón de encendido del monitor.","Si sigue negro, reporta."],cat:"Computador"},
+  r_net1:{s:"ok",t:"Reconecta la red de este equipo",p:"Si el resto del aula navega, el problema está en este computador.",steps:["Olvida y reconecta la red institucional.","Si es por cable, desconecta 5 segundos y vuelve a oír el clic.","Reinicia el computador.","Si no carga una página simple, reporta este puesto."],cat:"Red"},
+  r_wifi:{s:"ok",t:"Entra al WiFi institucional",p:"Ver la red no basta: hay que autenticarse con la cuenta del colegio.",steps:["Elige solo la red oficial de I.E. La Unión.","Revisa mayúsculas y el teclado.","Si pide certificado, acéptalo solo en la red del colegio.","Si falla 2 veces, no sigas: reporta para no bloquear la cuenta."],cat:"Red"},
+  r_netall:{s:"warn",t:"Caída de red en el aula",p:"Si nadie navega, es switch, access point o enlace del colegio.",steps:["Confirma con 2 o 3 equipos.","No reinicies el switch ni toques el rack.","Anota aula, hora y si fallan otras zonas.","Reporta con urgencia alta."],cat:"Red"},
+  r_hdmi:{s:"ok",t:"Reconecta HDMI o VGA",p:"Un cable a medias es la causa más frecuente de “sin imagen”.",steps:["Apaga el proyector con el control.","Conecta HDMI/VGA a fondo.","Enciende primero el proyector y después el computador.","Usa Fn + icono de monitor para duplicar."],cat:"Aula"},
+  r_input:{s:"ok",t:"Cambia la entrada de video",p:"El proyector puede estar en HDMI 2 o VGA mientras el PC está en HDMI 1.",steps:["Pulsa Source/Input hasta HDMI o VGA.","Espera 5–10 segundos entre entradas.","Si usas USB-C, conéctalo directo.","Si no hay imagen, reporta."],cat:"Aula"},
+  r_lamp:{s:"warn",t:"Imagen débil: posible lámpara o filtro",p:"No abras el proyector. El recambio lo hace soporte.",steps:["Oscurece el aula y mira si se distingue algo.","No golpear el equipo encendido.","Apágalo con el control y espera el ventilador 1–2 min.","Reporta aula y modelo."],cat:"Aula"},
+  r_jam:{s:"ok",t:"Saca el papel atascado con cuidado",p:"Jalar fuerte rompe el papel y deja restos.",steps:["Cancela la cola en el computador.","Abre bandeja y tapas; saca el papel en el sentido del paso.","Revisa que no queden trozos.","Imprime una página de prueba. Si se repite, reporta."],cat:"Impresora"},
+  r_off:{s:"ok",t:"Vuelve a poner la impresora en línea",p:"Suele estar apagada, sin red o tomada por otro equipo.",steps:["Confirma que esté encendida y sin error.","Revisa Ethernet o WiFi del colegio.","Quita “Usar impresora sin conexión” y márcala predeterminada.","Si sigue offline, reporta."],cat:"Impresora"},
+  r_queue:{s:"ok",t:"Limpia la cola de impresión",p:"Un trabajo trabado bloquea todo lo que viene detrás.",steps:["Cancela todos los documentos de la cola.","Apaga la impresora 15 segundos y enciéndela.","Reinicia el computador e imprime una página.","Si la cola se llena sola, reporta."],cat:"Impresora"},
+  r_mute:{s:"ok",t:"Quita el silencio y elige la salida correcta",p:"Windows a menudo envía el audio al proyector o a unos audífonos.",steps:["Sube el volumen y quita el altavoz tachado.","En Configuración de sonido elige Altavoces o Auriculares.","Si el audio va al proyector, cambia la salida.","Si no hay sonido, reporta."],cat:"Audio"},
+  r_acable:{s:"ok",t:"Reconecta parlantes o diadema",p:"Un conector a medias se ve conectado pero no pasa audio.",steps:["Enchufa el jack verde a fondo.","Si es USB, prueba otro puerto de atrás.","Elige el dispositivo en Configuración de sonido.","Sube también el volumen físico del parlante."],cat:"Audio"},
+  r_mic:{s:"ok",t:"Activa el micrófono y da permiso",p:"Meet o el navegador suelen tener el micrófono silenciado.",steps:["Revisa el mute físico de la diadema.","Windows: Privacidad → Micrófono permitido.","En el navegador, da permiso (candado de la barra).","En Meet/Teams elige el micrófono correcto."],cat:"Audio"},
+  r_pass:{s:"ok",t:"Recupera el acceso sin bloquear la cuenta",p:"Tres o más intentos malos suelen bloquear el usuario.",steps:["Confirma usuario institucional y que Bloq Mayús esté apagado.","No sigas adivinando. Anota el mensaje de error.","Pide restablecimiento con nombre completo, grado o área, y usuario."],cat:"Cuentas"},
+  r_lock:{s:"warn",t:"Cuenta bloqueada: lo libera soporte",p:"Un bloqueo por intentos no se quita desde el aula.",steps:["Deja de intentar entrar.","Anota usuario, hora y el mensaje.","Envía un reporte (urgencia media o alta si hay clase ahora)."],cat:"Cuentas"},
+  r_plat:{s:"ok",t:"Entra con la cuenta del colegio",p:"Classroom y el correo fallan si estás en una cuenta personal.",steps:["Cierra Gmail/Microsoft personal o usa incógnito.","Entra con el correo institucional, no un @gmail personal.","Acepta los permisos de la primera vez.","Si dice que no perteneces a la clase, reporta."],cat:"Cuentas"}
+};
+const guides = [
+  {i:"💻",t:"El computador no enciende",p:"Cable, interruptor de la fuente y carga del portátil.",tag:"easy",lbl:"BÁSICO"},
+  {i:"📶",t:"Conectar el WiFi institucional",p:"Elige la red oficial y no bloquees la cuenta.",tag:"easy",lbl:"BÁSICO"},
+  {i:"📽️",t:"Proyector sin imagen",p:"Source/Input, HDMI y orden de encendido.",tag:"med",lbl:"MEDIO"},
+  {i:"🖨️",t:"Impresora atascada o en cola",p:"Sacar papel sin romperlo y vaciar trabajos trabados.",tag:"med",lbl:"MEDIO"},
+  {i:"🐢",t:"El equipo está muy lento",p:"Cerrar programas y reiniciar desde el menú.",tag:"easy",lbl:"BÁSICO"},
+  {i:"👤",t:"No entra la cuenta institucional",p:"Evita el bloqueo y pide el restablecimiento.",tag:"med",lbl:"MEDIO"},
+  {i:"🔊",t:"No se oye audio",p:"Mute, dispositivo de salida y cables.",tag:"easy",lbl:"BÁSICO"},
+  {i:"⚠️",t:"Se cayó la red de todo el aula",p:"Confirma en 2 PCs. No toques switch ni rack.",tag:"hard",lbl:"URGENTE"}
+];
+
+let stack=["start"], urgency="media";
+const body=document.getElementById("wizardBody");
+const stepNum=document.getElementById("stepNum");
+const bar=document.getElementById("barFill");
+
+function render(){
+  const id=stack[stack.length-1];
+  const n=tree[id];
+  stepNum.textContent = n.steps ? "Solución" : "Paso "+stack.length;
+  bar.style.width = n.steps ? "100%" : Math.min(90, stack.length*28)+"%";
+  if(n.steps){
+    body.innerHTML = `<div class="result ${n.s}"><h3>${n.s==="ok"?"✅":"⚠️"} ${n.t}</h3><p>${n.p}</p><ol>${n.steps.map(s=>"<li>"+s+"</li>").join("")}</ol></div>
+      <div class="wiz-actions">
+        <button class="btn btn-primary" type="button" id="goReport">No se resolvió · Reportar</button>
+        <button class="btn btn-ghost" type="button" id="restart">Empezar de nuevo</button>
+        <button class="back-link" type="button" id="back">Volver</button>
+      </div>`;
+    document.getElementById("goReport").onclick=()=>{
+      const eq=document.getElementById("equipo");
+      const map={Computador:"Computador de aula",Red:"Red / WiFi",Aula:"Proyector / TV",Impresora:"Impresora",Audio:"Audio",Cuentas:"Cuenta / plataforma"};
+      if(map[n.cat]) eq.value=map[n.cat];
+      document.getElementById("intentado").value=n.t+" — "+n.steps.join(" / ");
+      document.getElementById("reportar").scrollIntoView({behavior:"smooth"});
+    };
+    document.getElementById("restart").onclick=()=>{stack=["start"];render();};
+    document.getElementById("back").onclick=()=>{stack.pop();render();};
+    return;
+  }
+  body.innerHTML = `<div class="q-title"><div class="icon">${n.icon||"🔍"}</div>${n.title}</div>
+    ${n.sub?`<p class="q-sub">${n.sub}</p>`:""}
+    <div class="opts">${n.options.map((o,i)=>`<button class="opt" type="button" data-i="${i}"><div class="oicon">${o.i}</div><span>${o.l}${o.h?`<small>${o.h}</small>`:""}</span></button>`).join("")}</div>
+    ${stack.length>1?`<div class="wiz-actions"><button class="back-link" type="button" id="back">Volver</button></div>`:""}`;
+  body.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{stack.push(n.options[+btn.dataset.i].n);render();};
+  });
+  const back=document.getElementById("back");
+  if(back) back.onclick=()=>{stack.pop();render();};
+}
+render();
+
+document.getElementById("guideCards").innerHTML = guides.map(g=>`
+  <article class="card">
+    <div class="cicon">${g.i}</div>
+    <h3>${g.t}</h3>
+    <p>${g.p}</p>
+    <span class="tag ${g.tag}">${g.lbl}</span>
+  </article>`).join("");
+
+document.getElementById("menuBtn").onclick=()=>document.getElementById("navLinks").classList.toggle("open");
+document.getElementById("navLinks").querySelectorAll("a").forEach(a=>a.onclick=()=>document.getElementById("navLinks").classList.remove("open"));
+
+document.querySelectorAll(".urg").forEach(b=>{
+  b.onclick=()=>{
+    urgency=b.dataset.v;
+    document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x===b));
+  };
+});
+
+const notice=document.getElementById("formNotice");
+function showNotice(kind, html){notice.className="notice show "+kind;notice.innerHTML=html;}
+
+document.getElementById("reportForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const f=e.target;
+  if(f._honey.value) return;
+  const btn=document.getElementById("submitBtn");
+  btn.disabled=true; btn.textContent="Enviando…";
+  const payload={
+    _subject:`[TROUBLESHOOTER] ${urgency.toUpperCase()} · ${f.equipo.value} · ${f.aula.value}`,
+    _template:"table",
+    _captcha:"false",
+    _honey:f._honey.value,
+    nombre:f.nombre.value.trim(),
+    rol:f.rol.value,
+    aula:f.aula.value.trim(),
+    equipo:f.equipo.value,
+    urgencia:urgency,
+    problema:f.problema.value.trim(),
+    intentado:f.intentado.value.trim()||"(nada anotado)",
+    destino:INBOX
+  };
+  if(f._replyto.value) payload._replyto=f._replyto.value.trim();
+  try{
+    const res=await fetch("https://formsubmit.co/ajax/"+INBOX,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const data=await res.json().catch(()=>({}));
+    const msg=String(data.message||data.success||"").toLowerCase();
+    if(msg.includes("activate")||msg.includes("confirm")||msg.includes("check your email")||msg.includes("verification")){
+      showNotice("warn", "El ticket se registró. Revisa <b>"+INBOX+"</b> (también Spam) y pulsa <b>Confirm form</b> en el correo de FormSubmit. Después de eso, cada reporte llega solo.");
+    } else if(res.ok){
+      showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
+      f.reset(); urgency="media";
+      document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
+    } else {
+      showNotice("err", "No se pudo enviar ahora. Escribe directo a "+INBOX+" o vuelve a intentar.");
+    }
+  }catch(err){
+    showNotice("err", "Sin conexión con el envío. Escribe a "+INBOX+" o reintenta en un momento.");
+  }finally{
+    btn.disabled=false; btn.textContent="Enviar reporte";
+  }
+});
+</script>
+</body>
+</html>
