@@ -438,6 +438,34 @@ document.querySelectorAll(".urg").forEach(b=>{
 
 const notice=document.getElementById("formNotice");
 function showNotice(kind, html){notice.className="notice show "+kind;notice.innerHTML=html;}
+function submitNativeFallback(payload, form){
+  let frame=document.getElementById("formsubmitFallbackFrame");
+  if(!frame){
+    frame=document.createElement("iframe");
+    frame.id="formsubmitFallbackFrame";
+    frame.name="formsubmitFallbackFrame";
+    frame.hidden=true;
+    document.body.appendChild(frame);
+  }
+  const fallback=document.createElement("form");
+  fallback.action="https://formsubmit.co/"+INBOX;
+  fallback.method="POST";
+  fallback.target=frame.name;
+  fallback.hidden=true;
+  Object.entries(payload).forEach(([name,value])=>{
+    const input=document.createElement("input");
+    input.type="hidden";
+    input.name=name;
+    input.value=value;
+    fallback.appendChild(input);
+  });
+  document.body.appendChild(fallback);
+  fallback.submit();
+  setTimeout(()=>fallback.remove(),2000);
+  showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
+  form.reset(); urgency="media";
+  document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
+}
 
 document.getElementById("reportForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
@@ -474,7 +502,7 @@ document.getElementById("reportForm").addEventListener("submit", async (e)=>{
       showNotice("err", "No se pudo enviar ahora. Escribe directo a "+INBOX+" o vuelve a intentar.");
     }
   }catch(err){
-    showNotice("err", "Sin conexión con el envío. Escribe a "+INBOX+" o reintenta en un momento.");
+    submitNativeFallback(payload, f);
   }finally{
     btn.disabled=false; btn.textContent="Enviar reporte";
   }
