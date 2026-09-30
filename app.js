@@ -1,4 +1,6 @@
 const INBOX = "sebascastroj70@gmail.com";
+// Clave de Web3Forms — consíguela gratis en https://web3forms.com (pon el correo de arriba)
+const WEB3FORMS_KEY = "TU_ACCESS_KEY_AQUI";
 const tree = {
   start:{title:"¿Qué está fallando?",sub:"Elige la categoría más cercana.",icon:"❓",options:[
     {l:"Computador o portátil",h:"No enciende, lento o pantalla negra",i:"💻",n:"pc"},
@@ -79,29 +81,16 @@ const notice=document.getElementById("formNotice");
 
 function showNotice(kind, html){notice.className="notice show "+kind;notice.innerHTML=html;}
 
-/** Envía el reporte con un formulario nativo a FormSubmit (más fiable en móvil, sin CORS). */
-function sendReportNative(payload, form){
-  let frame=document.getElementById("formsubmitFrame");
-  if(!frame){
-    frame=document.createElement("iframe");
-    frame.id="formsubmitFrame";
-    frame.name="formsubmitFrame";
-    frame.style.cssText="position:absolute;width:0;height:0;border:0;visibility:hidden";
-    document.body.appendChild(frame);
+/** Envía el reporte con Web3Forms (más fiable que FormSubmit). */
+async function sendReport(payload, form){
+  if(!WEB3FORMS_KEY || WEB3FORMS_KEY === "TU_ACCESS_KEY_AQUI"){
+    showNotice("err", "Falta configurar la clave de Web3Forms. Entra a <b>web3forms.com</b>, genera una Access Key con el correo <b>"+INBOX+"</b> y pégala en app.js.");
+    return false;
   }
-  const temp=document.createElement("form");
-  temp.action="https://formsubmit.co/"+INBOX;
-  temp.method="POST";
-  temp.target="formsubmitFrame";
-  temp.style.display="none";
-  const extras={
-    _subject: payload._subject,
-    _template: "table",
-    _captcha: "false",
-    _honey: payload._honey || ""
-  };
-  if(payload._replyto) extras._replyto=payload._replyto;
-  Object.assign(extras, {
+  const body = {
+    access_key: WEB3FORMS_KEY,
+    subject: payload._subject,
+    from_name: "TROUBLESHOOTER I.E. La Unión",
     nombre: payload.nombre,
     rol: payload.rol,
     aula: payload.aula,
@@ -109,32 +98,33 @@ function sendReportNative(payload, form){
     urgencia: payload.urgencia,
     problema: payload.problema,
     intentado: payload.intentado,
+    email: payload._replyto || INBOX,
     destino: INBOX
+  };
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {"Content-Type": "application/json", "Accept": "application/json"},
+    body: JSON.stringify(body)
   });
-  Object.entries(extras).forEach(([name,value])=>{
-    const input=document.createElement("input");
-    input.type="hidden";
-    input.name=name;
-    input.value=value==null?"":String(value);
-    temp.appendChild(input);
-  });
-  document.body.appendChild(temp);
-  temp.submit();
-  setTimeout(()=>temp.remove(),1500);
-  showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
-  form.reset();
-  urgency="media";
-  document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
+  const data = await res.json().catch(()=>({}));
+  if(res.ok && data.success){
+    showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
+    form.reset();
+    urgency = "media";
+    document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
+    return true;
+  }
+  throw new Error(data.message || "Error al enviar");
 }
 
-document.getElementById("reportForm").addEventListener("submit", (e)=>{
+document.getElementById("reportForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
-  const f=e.target;
+  const f = e.target;
   if(f._honey && f._honey.value) return;
-  const btn=document.getElementById("submitBtn");
-  btn.disabled=true;
-  btn.textContent="Enviando…";
-  const payload={
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Enviando…";
+  const payload = {
     _subject: "[TROUBLESHOOTER] "+urgency.toUpperCase()+" · "+f.equipo.value+" · "+f.aula.value,
     _honey: f._honey ? f._honey.value : "",
     nombre: f.nombre.value.trim(),
@@ -145,11 +135,12 @@ document.getElementById("reportForm").addEventListener("submit", (e)=>{
     problema: f.problema.value.trim(),
     intentado: (f.intentado.value.trim()||"(nada anotado)")
   };
-  if(f._replyto && f._replyto.value) payload._replyto=f._replyto.value.trim();
+  if(f._replyto && f._replyto.value) payload._replyto = f._replyto.value.trim();
   try{
-    sendReportNative(payload, f);
+    await sendReport(payload, f);
   }catch(err){
-    showNotice("err", "No se pudo enviar. Escribe a <b>"+INBOX+"</b> o reintenta en un momento.");
+    showNotice("err", "No se pudo enviar. Revisa la clave de Web3Forms o escribe a <b>"+INBOX+"</b>.");
+    console.error(err);
   }finally{
     setTimeout(()=>{ btn.disabled=false; btn.textContent="Enviar reporte"; }, 1200);
   }
