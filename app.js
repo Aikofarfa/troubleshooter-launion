@@ -1,6 +1,6 @@
 const INBOX = "sebascastroj70@gmail.com";
 // Clave de Web3Forms — consíguela gratis en https://web3forms.com (pon el correo de arriba)
-const WEB3FORMS_KEY = "TU_ACCESS_KEY_AQUI";
+const WEB3FORMS_KEY = "f3795645-2c5f-42a9-b9f5-376610b047de";
 const tree = {
   start:{title:"¿Qué está fallando?",sub:"Elige la categoría más cercana.",icon:"❓",options:[
     {l:"Computador o portátil",h:"No enciende, lento o pantalla negra",i:"💻",n:"pc"},
