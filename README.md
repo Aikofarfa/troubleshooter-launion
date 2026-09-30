@@ -1,6 +1,6 @@
 # TROUBLESHOOTER · I.E. La Unión
 
-Sitio de soporte técnico: diagnóstico guiado, guías rápidas y reportes.
+Sitio de soporte técnico: diagnóstico guiado, guías rápidas interactivas y reportes.
 
 ## Enlace público (este es el que se comparte en el colegio)
 
@@ -12,7 +12,6 @@ Repo: https://github.com/Aikofarfa/troubleshooter-launion
 
 Cada ticket se envía a **sebascastroj70@gmail.com** (FormSubmit).
 
-**La primera vez** FormSubmit manda un correo de *activación* a esa cuenta. Ábrelo (mira también Spam) y pulsa **Confirm form**. A partir de ahí, cada reporte llega solo.
 
 ## Cómo usarlo
 
