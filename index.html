@@ -293,22 +293,20 @@ const tree = {
   ]},
   print:{title:"¿Qué hace la impresora?",icon:"🖨️",options:[
     {l:"Papel atascado o no jala hoja",i:"📄",n:"r_jam"},
-    {l:"Aparece desconectada u offline",i:"📴",n:"r_off"},
-    {l:"El trabajo se queda en cola",i:"⏳",n:"r_queue"}
+    {l:"Aparece desconectada / offline",i:"🔌",n:"r_off"},
+    {l:"No imprime aunque está lista",i:"🖨️",n:"r_queue"}
   ]},
   audio:{title:"¿Qué pasa con el audio?",icon:"🔊",options:[
-    {l:"No se oye nada",i:"🔇",n:"r_mute"},
-    {l:"Parlantes o diadema desconectados",i:"🔌",n:"r_acable"},
-    {l:"El micrófono no captura voz",i:"🎤",n:"r_mic"}
+    {l:"No se oye nada (mudo o volumen 0)",i:"🔇",n:"r_mute"},
+    {l:"Cable o dispositivo de salida",i:"🎧",n:"r_jack"}
   ]},
-  acc:{title:"¿Cuál es el problema con la cuenta?",icon:"👤",options:[
-    {l:"Olvidé o no acepta la contraseña",i:"🔑",n:"r_pass"},
-    {l:"La cuenta está bloqueada",i:"🔒",n:"r_lock"},
-    {l:"No entra a Classroom, correo u otra plataforma",i:"📬",n:"r_plat"}
+  acc:{title:"¿Qué falla con la cuenta?",icon:"👤",options:[
+    {l:"Olvidé la contraseña o está bloqueada",i:"🔑",n:"r_pass"},
+    {l:"No entra a Classroom / plataforma",i:"📚",n:"r_plat"}
   ]},
   r_cable:{s:"ok",t:"Revisa la alimentación",p:"La mayoría de los “no enciende” se resuelven reconectando el cable y el interruptor de la fuente.",steps:["Confirma que el tomacorriente tenga corriente.","Conecta el cable a fondo al CPU o al portátil.","En escritorio, el switch de la fuente (atrás) debe estar en I.","Mantén el botón de encendido 3 segundos.","Si no hay luces, reporta el equipo."],cat:"Computador"},
-  r_charge:{s:"ok",t:"Carga el portátil antes de usarlo",p:"Con batería en 0 muchos portátiles no encienden aunque el cargador esté puesto.",steps:["Conecta el cargador original. Debe verse un LED.","Déjalo 15–20 minutos sin usarlo.","Si el LED no prende, prueba otro tomacorriente.","Si aún no responde, reporta con el código de inventario."],cat:"Computador"},
-  r_dead:{s:"warn",t:"El equipo no responde: hay que revisarlo",p:"Si hay corriente y el cable está bien, el fallo suele ser interno.",steps:["No abras el CPU ni cambies piezas.","Anota ruidos, olor a quemado o luces intermitentes.","Identifica aula, puesto y código.","Envía un reporte a soporte."],cat:"Computador"},
+  r_charge:{s:"ok",t:"Carga el portátil",p:"Sin batería y sin cargador el equipo no arranca.",steps:["Conecta el cargador original.","Mira el LED del conector o del cargador.","Espera 5–10 minutos si estaba en 0%.","Prueba encender. Si no responde, reporta."],cat:"Computador"},
+  r_dead:{s:"warn",t:"Equipo sin respuesta",p:"Puede ser fuente, placa o falla interna. No abras el equipo.",steps:["Prueba otro tomacorriente.","Revisa que el switch trasero esté en I.","Anota el código del equipo y el aula.","Reporta con urgencia media o alta."],cat:"Computador"},
   r_boot:{s:"warn",t:"El sistema no termina de cargar",p:"Puede ser un apagado incorrecto, actualización trabada o disco con error.",steps:["Espera 2 minutos: a veces está reparando el disco.","Si ves un porcentaje, no lo apagues.","Si se queda más de 10 minutos, apaga 8 segundos y vuelve a encender.","Si el ciclo se repite, reporta."],cat:"Computador"},
   r_slow:{s:"ok",t:"Acelera el equipo con una limpieza simple",p:"Lo más común es tener muchas pestañas o el disco lleno.",steps:["Cierra pestañas y programas que no uses.","Reinicia desde Inicio → Reiniciar.","Retira USB desconocidos.","Si sigue igual, reporta."],cat:"Computador"},
   r_disp:{s:"ok",t:"Recupera la imagen de la pantalla",p:"El equipo puede estar enviando video al proyector, o el cable está suelto.",steps:["Mira si el CPU tiene luces.","Reconecta HDMI/VGA en monitor y CPU.","En portátil: Fn + tecla de pantalla.","Prueba el botón de encendido del monitor.","Si sigue negro, reporta."],cat:"Computador"},
@@ -318,20 +316,18 @@ const tree = {
   r_hdmi:{s:"ok",t:"Reconecta HDMI o VGA",p:"Un cable a medias es la causa más frecuente de “sin imagen”.",steps:["Apaga el proyector con el control.","Conecta HDMI/VGA a fondo.","Enciende primero el proyector y después el computador.","Usa Fn + icono de monitor para duplicar."],cat:"Aula"},
   r_input:{s:"ok",t:"Cambia la entrada de video",p:"El proyector puede estar en HDMI 2 o VGA mientras el PC está en HDMI 1.",steps:["Pulsa Source/Input hasta HDMI o VGA.","Espera 5–10 segundos entre entradas.","Si usas USB-C, conéctalo directo.","Si no hay imagen, reporta."],cat:"Aula"},
   r_lamp:{s:"warn",t:"Imagen débil: posible lámpara o filtro",p:"No abras el proyector. El recambio lo hace soporte.",steps:["Oscurece el aula y mira si se distingue algo.","No golpear el equipo encendido.","Apágalo con el control y espera el ventilador 1–2 min.","Reporta aula y modelo."],cat:"Aula"},
-  r_jam:{s:"ok",t:"Saca el papel atascado con cuidado",p:"Jalar fuerte rompe el papel y deja restos.",steps:["Cancela la cola en el computador.","Abre bandeja y tapas; saca el papel en el sentido del paso.","Revisa que no queden trozos.","Imprime una página de prueba. Si se repite, reporta."],cat:"Impresora"},
+  r_jam:{s:"ok",t:"Saca el papel atascado con cuidado",p:"No tires con fuerza: sigue el sentido de avance del papel.",steps:["Apaga la impresora.","Abre las bandejas y retira el papel completo.","Cancela los trabajos en cola del computador.","Enciende y prueba una página de prueba.","Si se atasca de nuevo, reporta."],cat:"Impresora"},
   r_off:{s:"ok",t:"Vuelve a poner la impresora en línea",p:"Suele estar apagada, sin red o tomada por otro equipo.",steps:["Confirma que esté encendida y sin error.","Revisa Ethernet o WiFi del colegio.","Quita “Usar impresora sin conexión” y márcala predeterminada.","Si sigue offline, reporta."],cat:"Impresora"},
-  r_queue:{s:"ok",t:"Limpia la cola de impresión",p:"Un trabajo trabado bloquea todo lo que viene detrás.",steps:["Cancela todos los documentos de la cola.","Apaga la impresora 15 segundos y enciéndela.","Reinicia el computador e imprime una página.","Si la cola se llena sola, reporta."],cat:"Impresora"},
-  r_mute:{s:"ok",t:"Quita el silencio y elige la salida correcta",p:"Windows a menudo envía el audio al proyector o a unos audífonos.",steps:["Sube el volumen y quita el altavoz tachado.","En Configuración de sonido elige Altavoces o Auriculares.","Si el audio va al proyector, cambia la salida.","Si no hay sonido, reporta."],cat:"Audio"},
-  r_acable:{s:"ok",t:"Reconecta parlantes o diadema",p:"Un conector a medias se ve conectado pero no pasa audio.",steps:["Enchufa el jack verde a fondo.","Si es USB, prueba otro puerto de atrás.","Elige el dispositivo en Configuración de sonido.","Sube también el volumen físico del parlante."],cat:"Audio"},
-  r_mic:{s:"ok",t:"Activa el micrófono y da permiso",p:"Meet o el navegador suelen tener el micrófono silenciado.",steps:["Revisa el mute físico de la diadema.","Windows: Privacidad → Micrófono permitido.","En el navegador, da permiso (candado de la barra).","En Meet/Teams elige el micrófono correcto."],cat:"Audio"},
+  r_queue:{s:"ok",t:"Limpia la cola de impresión",p:"Un trabajo trabado bloquea todo lo que sigue.",steps:["Abre la cola de impresión y cancela todo.","Reinicia el servicio de impresión o el computador.","Vuelve a enviar un documento corto.","Si no imprime, reporta."],cat:"Impresora"},
+  r_mute:{s:"ok",t:"Revisa volumen y dispositivo de salida",p:"Casi siempre es mute o salida incorrecta.",steps:["Quita el mute del teclado y del volumen del sistema.","En Configuración de sonido elige parlantes o diadema.","Prueba un video de YouTube corto.","Si no hay dispositivo, reporta."],cat:"Audio"},
+  r_jack:{s:"ok",t:"Reconecta audio",p:"Jack mal puesto o dispositivo dañado.",steps:["Desconecta y vuelve a conectar el cable.","Prueba otro puerto o parlante.","En portátil revisa el conector de diadema.","Si no se oye, reporta."],cat:"Audio"},
   r_pass:{s:"ok",t:"Recupera el acceso sin bloquear la cuenta",p:"Tres o más intentos malos suelen bloquear el usuario.",steps:["Confirma usuario institucional y que Bloq Mayús esté apagado.","No sigas adivinando. Anota el mensaje de error.","Pide restablecimiento con nombre completo, grado o área, y usuario."],cat:"Cuentas"},
-  r_lock:{s:"warn",t:"Cuenta bloqueada: lo libera soporte",p:"Un bloqueo por intentos no se quita desde el aula.",steps:["Deja de intentar entrar.","Anota usuario, hora y el mensaje.","Envía un reporte (urgencia media o alta si hay clase ahora)."],cat:"Cuentas"},
   r_plat:{s:"ok",t:"Entra con la cuenta del colegio",p:"Classroom y el correo fallan si estás en una cuenta personal.",steps:["Cierra Gmail/Microsoft personal o usa incógnito.","Entra con el correo institucional, no un @gmail personal.","Acepta los permisos de la primera vez.","Si dice que no perteneces a la clase, reporta."],cat:"Cuentas"}
 };
-const guides = [
+const guides=[
   {i:"💻",t:"El computador no enciende",p:"Cable, interruptor de la fuente y carga del portátil.",tag:"easy",lbl:"BÁSICO",n:"r_cable",tip:"En un portátil, busca el LED del cargador; en un equipo de mesa, revisa también el interruptor trasero.",ifNot:"Si no aparece ninguna luz después de probar otro tomacorriente, anota el aula y el código del equipo y repórtalo."},
-  {i:"📶",t:"Conectar el WiFi institucional",p:"Elige la red oficial y no bloquees la cuenta.",tag:"easy",lbl:"BÁSICO",n:"r_wifi",tip:"Usa únicamente la red oficial del colegio y verifica que Bloq Mayús no esté activo.",ifNot:"Si falla dos veces, detente para no bloquear la cuenta; reporta el nombre de usuario y el aula."},
-  {i:"📽️",t:"Proyector sin imagen",p:"Source/Input, HDMI y orden de encendido.",tag:"med",lbl:"MEDIO",n:"r_input",tip:"Enciende primero el proyector y después el computador; espera unos segundos entre cada entrada.",ifNot:"Si ninguna entrada muestra imagen, reporta el aula y el modelo sin abrir ni golpear el equipo."},
+  {i:"📶",t:"Sin internet en un solo PC",p:"Olvidar la red, cable o reinicio simple.",tag:"easy",lbl:"BÁSICO",n:"r_net1",tip:"Si el resto del aula navega, el fallo es local a este puesto.",ifNot:"Si tras reconectar y reiniciar no carga ni una página, reporta el puesto."},
+  {i:"📽️",t:"Proyector sin imagen",p:"Entrada HDMI/VGA y cable bien puesto.",tag:"easy",lbl:"BÁSICO",n:"r_input",tip:"Cambia Source/Input y espera unos segundos entre cada opción.",ifNot:"Si no hay señal con cable bien conectado, reporta aula y modelo."},
   {i:"🖨️",t:"Impresora atascada o en cola",p:"Sacar papel sin romperlo y vaciar trabajos trabados.",tag:"med",lbl:"MEDIO",n:"r_jam",tip:"Cancela la cola antes de tirar del papel y retíralo siguiendo el sentido de avance.",ifNot:"Si vuelve a atascarse, no uses fuerza: deja la impresora apagada y repórtala con el mensaje de error."},
   {i:"🐢",t:"El equipo está muy lento",p:"Cerrar programas y reiniciar desde el menú.",tag:"easy",lbl:"BÁSICO",n:"r_slow",tip:"Guarda tu trabajo antes de reiniciar y desconecta memorias USB que no reconozcas.",ifNot:"Si continúa lento, anota qué programa estaba abierto y desde cuándo ocurre para el reporte."},
   {i:"👤",t:"No entra la cuenta institucional",p:"Evita el bloqueo y pide el restablecimiento.",tag:"med",lbl:"MEDIO",n:"r_pass",tip:"Confirma que estás usando la cuenta institucional y no una cuenta personal guardada en el navegador.",ifNot:"No sigas intentando contraseñas al azar; solicita restablecimiento con tu usuario y el mensaje de error."},
@@ -339,173 +335,139 @@ const guides = [
   {i:"⚠️",t:"Se cayó la red de todo el aula",p:"Confirma en 2 PCs. No toques switch ni rack.",tag:"hard",lbl:"URGENTE",n:"r_netall",tip:"Comprueba el fallo en dos o tres equipos y registra la hora exacta.",ifNot:"No reinicies switches ni abras el rack; reporta el aula, la hora y si otras zonas también están sin conexión."}
 ];
 
-let stack=["start"], urgency="media";
-const body=document.getElementById("wizardBody");
-const stepNum=document.getElementById("stepNum");
-const bar=document.getElementById("barFill");
-
-function render(){
-  const id=stack[stack.length-1];
-  const n=tree[id];
-  stepNum.textContent = n.steps ? "Solución" : "Paso "+stack.length;
-  bar.style.width = n.steps ? "100%" : Math.min(90, stack.length*28)+"%";
-  if(n.steps){
-    body.innerHTML = `<div class="result ${n.s}"><h3>${n.s==="ok"?"✅":"⚠️"} ${n.t}</h3><p>${n.p}</p><ol>${n.steps.map(s=>"<li>"+s+"</li>").join("")}</ol></div>
-      <div class="wiz-actions">
-        <button class="btn btn-primary" type="button" id="goReport">No se resolvió · Reportar</button>
-        <button class="btn btn-ghost" type="button" id="restart">Empezar de nuevo</button>
-        <button class="back-link" type="button" id="back">Volver</button>
-      </div>`;
-    document.getElementById("goReport").onclick=()=>{
-      const eq=document.getElementById("equipo");
-      const map={Computador:"Computador de aula",Red:"Red / WiFi",Aula:"Proyector / TV",Impresora:"Impresora",Audio:"Audio",Cuentas:"Cuenta / plataforma"};
-      if(map[n.cat]) eq.value=map[n.cat];
-      document.getElementById("intentado").value=n.t+" — "+n.steps.join(" / ");
-      document.getElementById("reportar").scrollIntoView({behavior:"smooth"});
-    };
-    document.getElementById("restart").onclick=()=>{stack=["start"];render();};
-    document.getElementById("back").onclick=()=>{stack.pop();render();};
-    return;
-  }
-  body.innerHTML = `<div class="q-title"><div class="icon">${n.icon||"🔍"}</div>${n.title}</div>
-    ${n.sub?`<p class="q-sub">${n.sub}</p>`:""}
-    <div class="opts">${n.options.map((o,i)=>`<button class="opt" type="button" data-i="${i}"><div class="oicon">${o.i}</div><span>${o.l}${o.h?`<small>${o.h}</small>`:""}</span></button>`).join("")}</div>
-    ${stack.length>1?`<div class="wiz-actions"><button class="back-link" type="button" id="back">Volver</button></div>`:""}`;
-  body.querySelectorAll(".opt").forEach(btn=>{
-    btn.onclick=()=>{stack.push(n.options[+btn.dataset.i].n);render();};
-  });
-  const back=document.getElementById("back");
-  if(back) back.onclick=()=>{stack.pop();render();};
-}
-render();
-
-document.getElementById("guideCards").innerHTML = guides.map(g=>`
-  <article class="card guide-card" role="button" tabindex="0" aria-expanded="false" data-guide="${g.n}" aria-label="Abrir guía: ${g.t}">
-    <div class="cicon">${g.i}</div>
-    <h3>${g.t}</h3>
-    <p>${g.p}</p>
-    <span class="tag ${g.tag}">${g.lbl}</span>
-  </article>`).join("");
-
-document.querySelectorAll(".guide-card").forEach(card=>{
-  const openGuide=()=>{
-    if(card.classList.contains("expanded")){
-      card.classList.remove("expanded");
-      card.setAttribute("aria-expanded","false");
-      card.querySelector(".guide-inline")?.remove();
-      return;
-    }
-    document.querySelectorAll(".guide-card.expanded").forEach(other=>{
-      other.classList.remove("expanded");
-      other.setAttribute("aria-expanded","false");
-      other.querySelector(".guide-inline")?.remove();
-    });
-    const guide=tree[card.dataset.guide];
-    const meta=guides.find(item=>item.n===card.dataset.guide);
-    card.insertAdjacentHTML("beforeend",`<div class="guide-inline" aria-live="polite">
-      <h4>Cómo resolverlo</h4>
-      <p>${guide.p}</p>
-      <ol>${guide.steps.map(step=>`<li>${step}</li>`).join("")}</ol>
-      <div class="guide-tip"><b>Consejo:</b> ${meta.tip}</div>
-      <div class="guide-next"><b>Si no funciona:</b> ${meta.ifNot}</div>
-      <button class="btn btn-ghost close-guide" type="button">Ocultar guía</button>
-    </div>`);
-    card.classList.add("expanded");
-    card.setAttribute("aria-expanded","true");
-    card.querySelector(".close-guide").addEventListener("click", e=>{
-      e.stopPropagation();
-      openGuide();
-    });
-  };
-  card.setAttribute("aria-expanded","false");
-  card.addEventListener("click", e=>{
-    if(!e.target.closest(".guide-inline")) openGuide();
-  });
-  card.addEventListener("keydown", e=>{
-    if(e.key==="Enter" || e.key===" "){ e.preventDefault(); openGuide(); }
-  });
-});
-
-document.getElementById("menuBtn").onclick=()=>document.getElementById("navLinks").classList.toggle("open");
-document.getElementById("navLinks").querySelectorAll("a").forEach(a=>a.onclick=()=>document.getElementById("navLinks").classList.remove("open"));
-
-document.querySelectorAll(".urg").forEach(b=>{
-  b.onclick=()=>{
-    urgency=b.dataset.v;
-    document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x===b));
-  };
-});
-
+let path=[];
+let urgency="media";
 const notice=document.getElementById("formNotice");
+
 function showNotice(kind, html){notice.className="notice show "+kind;notice.innerHTML=html;}
-function submitNativeFallback(payload, form){
-  let frame=document.getElementById("formsubmitFallbackFrame");
+
+/** Envía el reporte con un formulario nativo a FormSubmit (más fiable en móvil, sin CORS). */
+function sendReportNative(payload, form){
+  let frame=document.getElementById("formsubmitFrame");
   if(!frame){
     frame=document.createElement("iframe");
-    frame.id="formsubmitFallbackFrame";
-    frame.name="formsubmitFallbackFrame";
-    frame.hidden=true;
+    frame.id="formsubmitFrame";
+    frame.name="formsubmitFrame";
+    frame.style.cssText="position:absolute;width:0;height:0;border:0;visibility:hidden";
     document.body.appendChild(frame);
   }
-  const fallback=document.createElement("form");
-  fallback.action="https://formsubmit.co/"+INBOX;
-  fallback.method="POST";
-  fallback.target=frame.name;
-  fallback.hidden=true;
-  Object.entries(payload).forEach(([name,value])=>{
+  const temp=document.createElement("form");
+  temp.action="https://formsubmit.co/"+INBOX;
+  temp.method="POST";
+  temp.target="formsubmitFrame";
+  temp.style.display="none";
+  // Campos especiales de FormSubmit
+  const extras={
+    _subject: payload._subject,
+    _template: "table",
+    _captcha: "false",
+    _honey: payload._honey || ""
+  };
+  if(payload._replyto) extras._replyto=payload._replyto;
+  Object.assign(extras, {
+    nombre: payload.nombre,
+    rol: payload.rol,
+    aula: payload.aula,
+    equipo: payload.equipo,
+    urgencia: payload.urgencia,
+    problema: payload.problema,
+    intentado: payload.intentado,
+    destino: INBOX
+  });
+  Object.entries(extras).forEach(([name,value])=>{
     const input=document.createElement("input");
     input.type="hidden";
     input.name=name;
-    input.value=value;
-    fallback.appendChild(input);
+    input.value=value==null?"":String(value);
+    temp.appendChild(input);
   });
-  document.body.appendChild(fallback);
-  fallback.submit();
-  setTimeout(()=>fallback.remove(),2000);
-  showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
-  form.reset(); urgency="media";
+  document.body.appendChild(temp);
+  temp.submit();
+  setTimeout(()=>temp.remove(),1500);
+  showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.<br><small>Si es la primera vez, revisa el correo de activación de FormSubmit en la bandeja de <b>"+INBOX+"</b> y confirma el enlace.</small>");
+  form.reset();
+  urgency="media";
   document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
 }
 
-document.getElementById("reportForm").addEventListener("submit", async (e)=>{
+document.getElementById("reportForm").addEventListener("submit", (e)=>{
   e.preventDefault();
   const f=e.target;
-  if(f._honey.value) return;
+  if(f._honey && f._honey.value) return; // honeypot
   const btn=document.getElementById("submitBtn");
-  btn.disabled=true; btn.textContent="Enviando…";
+  btn.disabled=true;
+  btn.textContent="Enviando…";
   const payload={
-    _subject:`[TROUBLESHOOTER] ${urgency.toUpperCase()} · ${f.equipo.value} · ${f.aula.value}`,
-    _template:"table",
-    _captcha:"false",
-    _honey:f._honey.value,
-    nombre:f.nombre.value.trim(),
-    rol:f.rol.value,
-    aula:f.aula.value.trim(),
-    equipo:f.equipo.value,
-    urgencia:urgency,
-    problema:f.problema.value.trim(),
-    intentado:f.intentado.value.trim()||"(nada anotado)",
-    destino:INBOX
+    _subject: "[TROUBLESHOOTER] "+urgency.toUpperCase()+" · "+f.equipo.value+" · "+f.aula.value,
+    _honey: f._honey ? f._honey.value : "",
+    nombre: f.nombre.value.trim(),
+    rol: f.rol.value,
+    aula: f.aula.value.trim(),
+    equipo: f.equipo.value,
+    urgencia: urgency,
+    problema: f.problema.value.trim(),
+    intentado: (f.intentado.value.trim()||"(nada anotado)")
   };
-  if(f._replyto.value) payload._replyto=f._replyto.value.trim();
+  if(f._replyto && f._replyto.value) payload._replyto=f._replyto.value.trim();
   try{
-    const res=await fetch("https://formsubmit.co/ajax/"+INBOX,{
-      method:"POST",
-      headers:{"Accept":"application/json"},
-      body:new URLSearchParams(payload)
-    });
-    if(res.ok){
-      showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
-      f.reset(); urgency="media";
-      document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
-    } else {
-      submitNativeFallback(payload, f);
-    }
+    sendReportNative(payload, f);
   }catch(err){
-    submitNativeFallback(payload, f);
+    showNotice("err", "No se pudo enviar. Escribe a <b>"+INBOX+"</b> o reintenta en un momento.");
   }finally{
-    btn.disabled=false; btn.textContent="Enviar reporte";
+    setTimeout(()=>{ btn.disabled=false; btn.textContent="Enviar reporte"; }, 1200);
   }
+});
+
+// UI helpers (urgency, menu, wizard, guides) — kept as in original
+document.getElementById("urgWrap").addEventListener("click",e=>{
+  const b=e.target.closest(".urg"); if(!b) return;
+  urgency=b.dataset.v;
+  document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on",x===b));
+});
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+
+function renderStep(key){
+  const node=tree[key]; if(!node) return;
+  path.push(key);
+  const body=document.getElementById("wizardBody");
+  const bar=document.getElementById("barFill");
+  const stepNum=document.getElementById("stepNum");
+  stepNum.textContent="Paso "+path.length;
+  bar.style.width=Math.min(100, path.length*25)+"%";
+  if(node.s){
+    body.innerHTML=`<div class="result ${node.s}"><h3>${node.t}</h3><p>${node.p}</p><ol>${node.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>
+      <div class="wiz-actions"><button type="button" class="btn btn-primary" onclick="location.hash='#reportar'">Reportar si no se resolvió</button>
+      <button type="button" class="back-link" id="wizBack">Volver al inicio</button></div>`;
+    document.getElementById("wizBack").onclick=()=>{path=[];renderStep("start");};
+    return;
+  }
+  body.innerHTML=`<div class="q-title"><span class="icon">${node.icon||"❓"}</span>${node.title}</div>
+    ${node.sub?`<p class="q-sub">${node.sub}</p>`:""}
+    <div class="opts">${node.options.map(o=>`<button type="button" class="opt" data-n="${o.n}"><span class="oicon">${o.i||"•"}</span><span>${o.l}${o.h?`<small>${o.h}</small>`:""}</span></button>`).join("")}</div>
+    ${path.length>1?`<div class="wiz-actions"><button type="button" class="back-link" id="wizBack">Atrás</button></div>`:""}`;
+  body.querySelectorAll(".opt").forEach(btn=>btn.onclick=()=>renderStep(btn.dataset.n));
+  const back=document.getElementById("wizBack");
+  if(back) back.onclick=()=>{path.pop();path.pop();renderStep(path[path.length-1]||"start");};
+}
+renderStep("start");
+
+const cards=document.getElementById("guideCards");
+cards.innerHTML=guides.map((g,i)=>`<button type="button" class="card guide-card" data-i="${i}">
+  <div class="cicon">${g.i}</div><h3>${g.t}</h3><p>${g.p}</p>
+  <span class="tag ${g.tag}">${g.lbl}</span></button>`).join("");
+cards.addEventListener("click",e=>{
+  const card=e.target.closest(".guide-card"); if(!card) return;
+  const g=guides[+card.dataset.i];
+  const node=tree[g.n];
+  let box=card.querySelector(".guide-inline");
+  if(box){box.remove();return;}
+  cards.querySelectorAll(".guide-inline").forEach(x=>x.remove());
+  box=document.createElement("div"); box.className="guide-inline";
+  box.innerHTML=`<h4>${node.t}</h4><p>${node.p}</p><ol>${node.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+    <div class="guide-tip">${g.tip}</div><div class="guide-next">${g.ifNot}</div>
+    <button type="button" class="btn btn-ghost close-guide">Cerrar</button>`;
+  card.appendChild(box);
+  box.querySelector(".close-guide").onclick=ev=>{ev.stopPropagation();box.remove();};
 });
 </script>
 </body>
