@@ -499,7 +499,7 @@ document.getElementById("reportForm").addEventListener("submit", async (e)=>{
       f.reset(); urgency="media";
       document.querySelectorAll(".urg").forEach(x=>x.classList.toggle("on", x.dataset.v==="media"));
     } else {
-      showNotice("err", "No se pudo enviar ahora. Escribe directo a "+INBOX+" o vuelve a intentar.");
+      submitNativeFallback(payload, f);
     }
   }catch(err){
     submitNativeFallback(payload, f);
