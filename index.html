@@ -129,7 +129,135 @@ footer p{line-height:1.8}
 </style>
 </head>
 <body>
-<!-- SEE ARTIFACTS FILE - pushing via alternate method -->
-<p>Restaurando sitio...</p>
+<nav>
+  <a class="logo" href="#inicio">
+    <div class="mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </div>
+    <span>TROUBLE<b>SHOOTER</b></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+    <li><a href="#guias">Guías</a></li>
+    <li><a href="#reportar">Reportar</a></li>
+  </ul>
+  <a href="#reportar" class="btn btn-primary nav-cta">Reportar falla</a>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Menú">☰</button>
+</nav>
+
+<header id="inicio">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <div class="badge"><span class="dot"></span> Soporte en línea · I.E. La Unión</div>
+    <h1>Resuelve fallas de aula<br><span class="grad">antes de llamar a sistemas</span></h1>
+    <p>Asistente de diagnóstico para computadores, red, proyector, impresora y cuentas institucionales. Si no se soluciona, el reporte llega a <strong style="color:var(--light)">sebascastroj70@gmail.com</strong>.</p>
+    <div class="hero-btns">
+      <a href="#diagnostico" class="btn btn-primary">Iniciar diagnóstico</a>
+      <a href="#reportar" class="btn btn-ghost">Reportar problema</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">6</div><div class="lbl">Categorías</div></div>
+      <div class="stat"><div class="num">18</div><div class="lbl">Soluciones guiadas</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="lbl">Disponible</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="diagnostico">
+  <p class="sec-tag">01 — Diagnóstico</p>
+  <h2>Asistente interactivo</h2>
+  <p class="sec-desc">Responde 1 o 2 preguntas. Te damos los pasos. Si no alcanza, el reporte queda listo para sistemas.</p>
+  <div class="wizard">
+    <div class="progress">
+      <span class="step-num" id="stepNum">Paso 1</span>
+      <div class="bar"><i id="barFill"></i></div>
+    </div>
+    <div id="wizardBody"></div>
+  </div>
+</section>
+
+<section id="guias">
+  <p class="sec-tag">02 — Guías rápidas</p>
+  <h2>Lo más frecuente en el aula</h2>
+  <p class="sec-desc">Procedimientos cortos para equipos, red, proyector, impresora y cuentas.</p>
+  <div class="cards" id="guideCards"></div>
+</section>
+
+<section id="reportar">
+  <p class="sec-tag">03 — Reportar</p>
+  <h2>Ticket para sistemas</h2>
+  <p class="sec-desc">Completa el formulario y envía el reporte al equipo de soporte.</p>
+  <div class="form-wrap">
+    <div id="formNotice" class="notice"></div>
+    <form id="reportForm">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+      <div class="form-grid">
+        <div>
+          <label for="nombre">Nombre completo *</label>
+          <input id="nombre" name="nombre" required minlength="3" placeholder="Nombre y apellido" autocomplete="name">
+        </div>
+        <div>
+          <label for="rol">Rol *</label>
+          <select id="rol" name="rol" required>
+            <option>Estudiante</option>
+            <option>Docente</option>
+            <option>Administrativo</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div>
+          <label for="ubicacion">Aula o dependencia *</label>
+          <input id="ubicacion" name="aula" required minlength="2" placeholder="Ej. Aula 203, biblioteca">
+        </div>
+        <div>
+          <label for="equipo">Equipo o servicio *</label>
+          <select id="equipo" name="equipo" required>
+            <option>Computador de aula</option>
+            <option>Portátil</option>
+            <option>Proyector / TV</option>
+            <option>Impresora</option>
+            <option>Red / WiFi</option>
+            <option>Audio</option>
+            <option>Cuenta / plataforma</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div>
+          <label for="contacto">Correo para responderte</label>
+          <input id="contacto" name="_replyto" type="email" placeholder="opcional">
+        </div>
+        <div>
+          <label>Urgencia</label>
+          <div class="urgency" id="urgWrap">
+            <button type="button" class="urg baja" data-v="baja">baja</button>
+            <button type="button" class="urg media on" data-v="media">media</button>
+            <button type="button" class="urg alta" data-v="alta">alta</button>
+          </div>
+        </div>
+        <div class="full">
+          <label for="desc">¿Qué ocurre? *</label>
+          <textarea id="desc" name="problema" required minlength="10" placeholder="Describe lo que ves, desde cuándo y a cuántos equipos les pasa."></textarea>
+        </div>
+        <div class="full">
+          <label for="intentado">¿Qué ya intentaste?</label>
+          <textarea id="intentado" name="intentado" placeholder="Pasos del asistente, reinicios, otro cable…"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:24px">
+        <button type="submit" class="btn btn-primary" id="submitBtn">Enviar reporte</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p><b>TROUBLESHOOTER</b> · I.E. La Unión, Atlántico</p>
+  <p>Proyecto formativo SENATIC · Equipo 4 — Diego Gómez · Sebastián Castro · Camilo Cardona · Sandra Solera · Salomé Quintero</p>
+  <p>Reportes: sebascastroj70@gmail.com · Atención presencial lun–vie 7:00–16:00</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
