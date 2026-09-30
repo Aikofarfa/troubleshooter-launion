@@ -463,11 +463,9 @@ document.getElementById("reportForm").addEventListener("submit", async (e)=>{
   try{
     const res=await fetch("https://formsubmit.co/ajax/"+INBOX,{
       method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify(payload)
+      headers:{"Accept":"application/json"},
+      body:new URLSearchParams(payload)
     });
-    const data=await res.json().catch(()=>({}));
-    const msg=String(data.message||data.success||"").toLowerCase();
     if(res.ok){
       showNotice("ok", "Reporte enviado a <b>"+INBOX+"</b>. Sistemas lo recibirá en esa bandeja.");
       f.reset(); urgency="media";
