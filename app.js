@@ -10,11 +10,27 @@ const tree = {
     {l:"Audio o micrófono",h:"Sin sonido, mudo o cable",i:"🔊",n:"audio"},
     {l:"Cuenta o plataforma",h:"Correo, contraseña o bloqueo",i:"👤",n:"acc"}
   ]},
-  pc:{title:"¿Qué ocurre con el computador?",icon:"💻",options:[
-    {l:"No enciende",h:"Sin luces ni ventilador",i:"⚡",n:"pc_pwr"},
-    {l:"Enciende pero no carga el sistema",i:"🔄",n:"r_boot"},
-    {l:"Está muy lento",i:"🐢",n:"r_slow"},
-    {l:"Pantalla negra o sin señal",i:"🖥️",n:"r_disp"}
+  pc:{title:"¿Qué falla tiene el computador o portátil?",sub:"Selecciona una de las 20 fallas más comunes para ver la solución.",icon:"💻",options:[
+    {l:"No enciende",h:"Sin luces ni ventilador",i:"⚡",n:"r_cable"},
+    {l:"No carga Windows",h:"Se queda iniciando",i:"🔄",n:"r_boot"},
+    {l:"Está muy lento",h:"Tarda en abrir todo",i:"🐢",n:"r_slow"},
+    {l:"Pantalla negra o sin señal",i:"🖥️",n:"r_disp"},
+    {l:"La batería no carga",i:"🔋",n:"r_charge"},
+    {l:"Se apaga solo",i:"⏻",n:"r_shutdown"},
+    {l:"Se reinicia solo",i:"🔁",n:"r_restart"},
+    {l:"Se queda congelado",i:"🧊",n:"r_freeze"},
+    {l:"Aparece pantalla azul",i:"🟦",n:"r_bsod"},
+    {l:"No reconoce el teclado",i:"⌨️",n:"r_keyboard"},
+    {l:"No reconoce el mouse",i:"🖱️",n:"r_mouse"},
+    {l:"Un puerto USB no funciona",i:"🔌",n:"r_usb"},
+    {l:"No se escucha el audio",i:"🔊",n:"r_mute"},
+    {l:"No conecta al WiFi",i:"📶",n:"r_wifi"},
+    {l:"El internet está muy lento",i:"🌐",n:"r_net_slow"},
+    {l:"No abre un programa",i:"📦",n:"r_apps"},
+    {l:"El disco está lleno",i:"💾",n:"r_disk_full"},
+    {l:"Aparecen ventanas extrañas",i:"🛡️",n:"r_malware"},
+    {l:"No imprime desde el PC",i:"🖨️",n:"r_queue"},
+    {l:"Se calienta demasiado",i:"🌡️",n:"r_overheat"}
   ]},
   pc_pwr:{title:"¿El cable de poder está bien conectado?",icon:"⚡",options:[
     {l:"No estoy seguro / se ve suelto",i:"🔌",n:"r_cable"},
@@ -62,7 +78,19 @@ const tree = {
   r_mute:{s:"ok",t:"Revisa volumen y dispositivo de salida",p:"Casi siempre es mute o salida incorrecta.",steps:["Quita el mute del teclado y del volumen del sistema.","En Configuración de sonido elige parlantes o diadema.","Prueba un video de YouTube corto.","Si no hay dispositivo, reporta."],cat:"Audio"},
   r_jack:{s:"ok",t:"Reconecta audio",p:"Jack mal puesto o dispositivo dañado.",steps:["Desconecta y vuelve a conectar el cable.","Prueba otro puerto o parlante.","En portátil revisa el conector de diadema.","Si no se oye, reporta."],cat:"Audio"},
   r_pass:{s:"ok",t:"Recupera el acceso sin bloquear la cuenta",p:"Tres o más intentos malos suelen bloquear el usuario.",steps:["Confirma usuario institucional y que Bloq Mayús esté apagado.","No sigas adivinando. Anota el mensaje de error.","Pide restablecimiento con nombre completo, grado o área, y usuario."],cat:"Cuentas"},
-  r_plat:{s:"ok",t:"Entra con la cuenta del colegio",p:"Classroom y el correo fallan si estás en una cuenta personal.",steps:["Cierra Gmail/Microsoft personal o usa incógnito.","Entra con el correo institucional, no un @gmail personal.","Acepta los permisos de la primera vez.","Si dice que no perteneces a la clase, reporta."],cat:"Cuentas"}
+  r_plat:{s:"ok",t:"Entra con la cuenta del colegio",p:"Classroom y el correo fallan si estás en una cuenta personal.",steps:["Cierra Gmail/Microsoft personal o usa incógnito.","Entra con el correo institucional, no un @gmail personal.","Acepta los permisos de la primera vez.","Si dice que no perteneces a la clase, reporta."],cat:"Cuentas"},
+  r_shutdown:{s:"warn",t:"Evita que el equipo se apague solo",p:"Los apagados inesperados suelen relacionarse con temperatura, energía o batería.",steps:["Guarda el trabajo y desconecta periféricos que no uses.","Comprueba que las rejillas de ventilación no estén cubiertas.","En un portátil, prueba con el cargador conectado.","Si vuelve a apagarse, reporta el equipo y la hora del fallo."],cat:"Computador"},
+  r_restart:{s:"warn",t:"Revisa los reinicios inesperados",p:"Un reinicio puede producirse por una actualización, temperatura o un fallo del sistema.",steps:["Anota si aparece un mensaje o pantalla azul.","Instala las actualizaciones pendientes cuando puedas guardar el trabajo.","Desconecta USB o accesorios agregados recientemente.","Si se repite, reporta el código del equipo y el programa abierto."],cat:"Computador"},
+  r_freeze:{s:"ok",t:"Recupera un equipo congelado",p:"Un programa o proceso puede estar usando todos los recursos.",steps:["Espera un minuto y no pulses muchas veces el botón.","Intenta cerrar el programa que no responde.","Si responde, guarda y reinicia desde Inicio.","Si no responde, mantén el botón presionado solo para apagar y reporta si ocurre de nuevo."],cat:"Computador"},
+  r_bsod:{s:"warn",t:"Registra la pantalla azul",p:"La pantalla azul muestra un error del sistema que conviene reportar con su código.",steps:["Fotografía o anota el código que aparece.","Deja que el equipo reinicie si lo hace solo.","No instales programas para corregirlo sin autorización.","Reporta el código, la hora y qué programa estaba abierto."],cat:"Computador"},
+  r_keyboard:{s:"ok",t:"Haz que el teclado vuelva a responder",p:"El problema suele estar en la conexión, el puerto o las pilas.",steps:["Desconecta y conecta el teclado en otro puerto USB.","Si es inalámbrico, cambia las pilas y revisa el receptor.","Prueba escribir en otro programa.","Si ningún teclado funciona, reporta el equipo."],cat:"Computador"},
+  r_mouse:{s:"ok",t:"Recupera el mouse",p:"Una conexión floja, suciedad en el sensor o pilas agotadas pueden impedir que funcione.",steps:["Desconecta y conecta el mouse en otro puerto.","Limpia suavemente el sensor y prueba otra superficie.","Si es inalámbrico, cambia las pilas.","Si puedes, prueba otro mouse y reporta si tampoco funciona."],cat:"Computador"},
+  r_usb:{s:"ok",t:"Revisa el puerto USB",p:"No todos los fallos del accesorio significan que el computador esté dañado.",steps:["Prueba el dispositivo en otro puerto USB.","Comprueba si otro dispositivo funciona en ese puerto.","No fuerces conectores ni uses accesorios desconocidos.","Si el puerto está flojo o ninguno funciona, reporta el equipo."],cat:"Computador"},
+  r_net_slow:{s:"ok",t:"Mejora una conexión lenta",p:"Muchas pestañas, descargas o varios equipos usando la red pueden reducir la velocidad.",steps:["Cierra descargas y pestañas que no uses.","Comprueba si el problema ocurre en otros sitios y aplicaciones.","Reinicia el equipo si lleva muchos días encendido.","Si toda el aula está lenta, repórtalo como problema de red."],cat:"Computador"},
+  r_apps:{s:"ok",t:"Repara un programa que no abre",p:"Puede estar bloqueado, desactualizado o necesitar más recursos.",steps:["Cierra otras aplicaciones y vuelve a intentarlo.","Reinicia el computador desde Inicio.","Anota el mensaje exacto si aparece uno.","No desinstales ni instales programas sin autorización; reporta si continúa."],cat:"Computador"},
+  r_disk_full:{s:"ok",t:"Libera espacio de forma segura",p:"Un disco lleno vuelve lento al equipo y puede impedir que se abran programas.",steps:["Borra archivos personales que ya no necesites y vacía la papelera.","No borres carpetas de Windows ni programas del colegio.","Mueve archivos grandes a un medio autorizado si corresponde.","Si el aviso continúa, reporta el equipo indicando el espacio disponible."],cat:"Computador"},
+  r_malware:{s:"warn",t:"Detén ventanas o avisos extraños",p:"Los anuncios inesperados pueden venir de una página, extensión o software no autorizado.",steps:["No hagas clic en avisos que prometen limpiar o acelerar el equipo.","Cierra la pestaña o el navegador.","No descargues programas ni entregues contraseñas.","Reporta el sitio, mensaje o programa que provocó el aviso."],cat:"Computador"},
+  r_overheat:{s:"warn",t:"Reduce el calentamiento del equipo",p:"La temperatura alta puede causar lentitud, apagados y daños.",steps:["Apaga el equipo si está muy caliente o hace ruido extraño.","Colócalo sobre una superficie firme y despeja sus ventilaciones.","No lo cubras ni introduzcas objetos para limpiarlo.","Reporta el equipo si el ventilador sigue sonando o se apaga solo."],cat:"Computador"}
 };
 const guides=[
   {i:"💻",t:"El computador no enciende",p:"Cable, interruptor de la fuente y carga del portátil.",tag:"easy",lbl:"BÁSICO",n:"r_cable",tip:"En un portátil, busca el LED del cargador; en un equipo de mesa, revisa también el interruptor trasero.",ifNot:"Si no aparece ninguna luz después de probar otro tomacorriente, anota el aula y el código del equipo y repórtalo."},
@@ -174,7 +202,12 @@ function renderStep(key){
     ${path.length>1?`<div class="wiz-actions"><button type="button" class="back-link" id="wizBack">Atrás</button></div>`:""}`;
   body.querySelectorAll(".opt").forEach(btn=>btn.onclick=()=>renderStep(btn.dataset.n));
   const back=document.getElementById("wizBack");
-  if(back) back.onclick=()=>{path.pop();path.pop();renderStep(path[path.length-1]||"start");};
+  if(back) back.onclick=()=>{
+    path.pop();
+    const previous=path[path.length-1]||"start";
+    path.pop();
+    renderStep(previous);
+  };
 }
 renderStep("start");
 

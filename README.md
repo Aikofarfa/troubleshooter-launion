@@ -1,20 +1,27 @@
 # TROUBLESHOOTER · I.E. La Unión
 
-Sitio de soporte técnico: diagnóstico guiado, guías rápidas interactivas y reportes.
+Página estática de soporte técnico con diagnóstico guiado, guías rápidas y formulario de reportes.
 
-## Enlace público (este es el que se comparte en el colegio)
+## Funcionalidades
 
-**https://aikofarfa.github.io/troubleshooter-launion/**
+- Asistente interactivo para computadores, red, proyector, impresora, audio y cuentas.
+- Apartado de **20 fallas comunes de computadores y portátiles**, cada una con su solución paso a paso.
+- Guías rápidas para los problemas más frecuentes del aula.
+- Formulario de reporte conectado a Web3Forms.
 
-Repo: https://github.com/Aikofarfa/troubleshooter-launion
+## Vista local
 
-## Correos de reportes
+Abre `index.html` directamente en un navegador o ejecuta:
 
-Cada ticket se envía a **sebascastroj70@gmail.com** (FormSubmit).
+```bash
+python3 -m http.server 8000
+```
 
+Luego visita `http://localhost:8000`.
 
-## Cómo usarlo
+## Estructura principal
 
-1. **Diagnóstico** — elige el problema y sigue las preguntas.
-2. Si no se resuelve, **Reportar** — el correo llega a sistemas.
-3. **Guías** — procedimientos cortos de aula, red, equipos y cuentas.
+- `index.html`: estructura, estilos y contenido visual de la página.
+- `app.js`: árbol de diagnóstico, 20 fallas de PC, guías rápidas y envío de reportes.
+
+La página fue copiada desde `troubleshooter-launion` y adaptada en este repositorio de prueba.
